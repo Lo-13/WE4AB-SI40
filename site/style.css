@@ -1,0 +1,40 @@
+body {
+    font-family: "DejaVu Sans", sans-serif;
+    margin: 0;
+}
+
+.margin-left-right {
+    margin-left: 10em;
+    margin-right: 10em;
+}
+
+input[type="submit"] {
+    background-color: #008CBA;
+    padding: 1em;
+    font-weight: bold;
+    color: white;
+    border-color: aliceblue;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+header nav {
+    background-color: teal;
+    width: 100%;
+    text-align: right;
+}
+
+header nav button {
+    background-color: teal;
+    border-width: 0;
+    border-color: aliceblue;
+    font-weight: bold;
+    color: aliceblue;
+    padding: 1em;
+    cursor: pointer;
+}
+
+header nav button:hover {
+    background-color: #008CBA;
+}
+
