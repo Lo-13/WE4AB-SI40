@@ -7,6 +7,7 @@
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -19,7 +20,8 @@ SET time_zone = "+00:00";
 
 --
 -- Base de données : `we4x_si40_project`
---
+CREATE DATABASE we4x_si40_db;
+USE we4x_si40_db;
 
 -- --------------------------------------------------------
 
