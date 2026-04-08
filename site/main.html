@@ -2,16 +2,25 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Accueil</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Accueil - GamingRooms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<header>
-    <nav>
-        <a href="signin.html"><button>Se connecter</button></a>
-        <a href="signup.html"><button>S'inscrire</button></a>
+<body class="bg-gray-950 text-white min-h-screen">
+
+<header class="bg-gray-900 border-b border-purple-900 px-8 py-4 flex justify-between items-center">
+    <a href="main.html" class="text-purple-400 text-xl font-semibold">🎮 GamingRooms</a>
+    <nav class="flex gap-4">
+        <a href="rooms.html" class="text-gray-400 hover:text-white transition">Salles</a>
+        <a href="signin.html" class="border border-purple-600 text-purple-400 px-4 py-2 rounded-lg hover:bg-purple-600 hover:text-white transition text-sm">Se connecter</a>
+        <a href="signup.html" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition text-sm">S'inscrire</a>
     </nav>
 </header>
-<p>Bienvenue sur ce site</p>
+
+<main class="flex flex-col items-center justify-center text-center mt-28 px-4">
+    <h1 class="text-5xl font-bold mb-4">Réservez votre <span class="text-purple-400">salle gaming</span></h1>
+    <p class="text-gray-400 text-lg max-w-xl mb-10">Salles équipées PS5, Xbox, PC pour jouer entre amis. Réservation simple et rapide.</p>
+    <a href="rooms.html" class="bg-purple-600 hover:bg-purple-700 text-white text-lg px-8 py-3 rounded-xl transition">Voir les salles →</a>
+</main>
+
 </body>
 </html>

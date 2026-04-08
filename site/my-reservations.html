@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mes réservations - GamingRooms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-white min-h-screen">
+
+<header class="bg-gray-900 border-b border-purple-900 px-8 py-4 flex justify-between items-center">
+    <a href="main.html" class="text-purple-400 text-xl font-semibold">🎮 GamingRooms</a>
+    <nav class="flex gap-4">
+        <a href="rooms.html" class="text-gray-400 hover:text-white transition">Salles</a>
+        <a href="my-reservations.html" class="text-white font-semibold">Mes réservations</a>
+        <a href="account.html" class="text-gray-400 hover:text-white transition">Mon compte</a>
+    </nav>
+</header>
+
+<main class="max-w-3xl mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold mb-8">Mes réservations</h2>
+
+    <div class="flex flex-col gap-4">
+
+        <div class="bg-gray-900 rounded-xl p-6 border-l-4 border-purple-500 border border-gray-800">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-semibold text-lg">Salle Alpha</h3>
+                    <p class="text-gray-400 text-sm mt-1">12 avril 2025 · 14h00 → 16h00</p>
+                    <p class="text-gray-500 text-sm">2 joueurs</p>
+                </div>
+                <span class="bg-green-900 text-green-400 text-xs px-3 py-1 rounded-full">Confirmé</span>
+            </div>
+        </div>
+
+        <div class="bg-gray-900 rounded-xl p-6 border-l-4 border-yellow-500 border border-gray-800">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-semibold text-lg">Salle Omega</h3>
+                    <p class="text-gray-400 text-sm mt-1">20 avril 2025 · 18h00 → 20h00</p>
+                    <p class="text-gray-500 text-sm">5 joueurs</p>
+                </div>
+                <span class="bg-yellow-900 text-yellow-400 text-xs px-3 py-1 rounded-full">En attente</span>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>
