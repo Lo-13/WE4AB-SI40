@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS we4x_si40_db;
+CREATE DATABASE we4x_si40_db;
+USE we4x_si40_db;
+
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
@@ -21,8 +25,6 @@ SET time_zone = "+00:00";
 -- Base de données : `we4x_si40_db`
 --
 
-CREATE DATABASE we4x_si40_db;
-USE we4x_si40_db;
 
 --
 -- Structure de la table `comment`

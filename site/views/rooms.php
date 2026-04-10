@@ -1,0 +1,41 @@
+<?php
+$title = "Rooms"; 
+include 'partials/header.php'; 
+?>
+
+<body class="bg-gray-950 text-white min-h-screen">
+
+
+
+<main class="max-w-5xl mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold mb-8">Nos salles disponibles</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div class="bg-gray-900 rounded-xl p-6 border border-gray-800 hover:border-purple-700 transition">
+            <h3 class="text-xl font-semibold mb-2">Salle Alpha</h3>
+            <p class="text-gray-400 text-sm mb-1">PS5 · jusqu'à 6 joueurs</p>
+            <p class="text-gray-500 text-sm mb-4">Salle cosy avec 2 TV 4K et canapés.</p>
+            <span class="text-purple-400 font-semibold text-lg block mb-4">15€ / heure</span>
+            <a href="room-detail" class="block text-center bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition text-sm">Voir le détail</a>
+        </div>
+
+        <div class="bg-gray-900 rounded-xl p-6 border border-gray-800 hover:border-purple-700 transition">
+            <h3 class="text-xl font-semibold mb-2">Salle Omega</h3>
+            <p class="text-gray-400 text-sm mb-1">PC Gaming · jusqu'à 10 joueurs</p>
+            <p class="text-gray-500 text-sm mb-4">10 postes PC haute performance.</p>
+            <span class="text-purple-400 font-semibold text-lg block mb-4">20€ / heure</span>
+            <a href="room-detail" class="block text-center bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition text-sm">Voir le détail</a>
+        </div>
+
+        <div class="bg-gray-900 rounded-xl p-6 border border-gray-800 hover:border-purple-700 transition">
+            <h3 class="text-xl font-semibold mb-2">Salle Nexus</h3>
+            <p class="text-gray-400 text-sm mb-1">Xbox · jusqu'à 8 joueurs</p>
+            <p class="text-gray-500 text-sm mb-4">Ambiance rétro, jeux classiques inclus.</p>
+            <span class="text-purple-400 font-semibold text-lg block mb-4">12€ / heure</span>
+            <a href="room-detail" class="block text-center bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition text-sm">Voir le détail</a>
+        </div>
+
+    </div>
+</main>
+
+<?php include 'partials/footer.php'; ?>
