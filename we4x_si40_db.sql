@@ -1,13 +1,9 @@
-DROP DATABASE IF EXISTS we4x_si40_db;
-CREATE DATABASE we4x_si40_db;
-USE we4x_si40_db;
-
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : ven. 03 avr. 2026 à 18:24
+-- Généré le : ven. 10 avr. 2026 à 19:00
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -25,6 +21,7 @@ SET time_zone = "+00:00";
 -- Base de données : `we4x_si40_db`
 --
 
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `comment`
@@ -144,11 +141,19 @@ CREATE TABLE `room` (
   `name` varchar(100) NOT NULL,
   `address` varchar(200) NOT NULL,
   `capacity` int(11) NOT NULL,
-  `type_material` int(11) NOT NULL,
   `hourly_rate` decimal(10,2) NOT NULL,
   `description` text NOT NULL,
   `status` enum('available','unavailable','maintenance','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `room`
+--
+
+INSERT INTO `room` (`id`, `name`, `address`, `capacity`, `hourly_rate`, `description`, `status`) VALUES
+(1, 'Alpha', '123 Anywhere Street', 6, 15.00, 'Salle cosy avec 2 TV 4K et canapés.', 'available'),
+(2, 'Omega', '123 Anywhere St', 10, 20.00, '10 postes PC haute performance.', 'available'),
+(3, 'Nexus', '123 Anywhere Street', 8, 12.00, 'Ambiance rétro, jeux classiques inclus.', 'available');
 
 -- --------------------------------------------------------
 
@@ -199,6 +204,14 @@ CREATE TABLE `user` (
   `role` enum('user','admin') NOT NULL,
   `registration_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `user`
+--
+
+INSERT INTO `user` (`id`, `email`, `name`, `last_name`, `age`, `password`, `role`, `registration_date`) VALUES
+(1, 'j.bened@gmail.com', 'Julie', 'BENED', 15, '$2y$10$vM5X3uBf8vQ4Fj0Xv9mFTOfzB2RT2OpqH.awonfgtseJis1brDaPK', 'user', '2026-04-10 17:44:21'),
+(2, 'j.benedd@gmail.com', 'Julie', 'BENED', 15, '$2y$10$sJWlWHEoenCPeIOt8oxyrOviSpDweH8dGRFBCOAEyWegGRBjnWiIy', 'user', '2026-04-10 17:46:37');
 
 --
 -- Index pour les tables déchargées
@@ -339,7 +352,7 @@ ALTER TABLE `reservation`
 -- AUTO_INCREMENT pour la table `room`
 --
 ALTER TABLE `room`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `type_material`
@@ -351,7 +364,7 @@ ALTER TABLE `type_material`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Contraintes pour les tables déchargées
