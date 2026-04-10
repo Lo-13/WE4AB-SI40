@@ -1,3 +1,36 @@
+<?php
+session_start();
+require_once 'includes/db.php';
+
+$erreur ='';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email =trim($_POST['email']);
+    $mdp =($_POST['mdp']);
+
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+    $stmt->execute(['email' => $email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user && password_verify($mdp, $user['mdp'])) {
+        $_SESSION['user'] =[
+                'email' => $user['email'],
+            'name' => $user['name'],
+            'role' => $user['role'],
+            'id' => $user['id'],
+        ];
+
+        if ($user['role'] == 'admin') {
+            header('Location: admin/dashboard.php');
+        } else {
+            $erreur = 'Email ou mot de passe incorrect';
+        }
+    }
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,14 +44,21 @@
     <a href="main.html" class="text-purple-400 text-xl font-semibold">🎮 GamingRooms</a>
     <nav class="flex gap-4">
         <a href="rooms.html" class="text-gray-400 hover:text-white transition">Salles</a>
-        <a href="signin.html" class="border border-purple-600 text-purple-400 px-4 py-2 rounded-lg hover:bg-purple-600 hover:text-white transition text-sm">Se connecter</a>
-        <a href="signup.html" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition text-sm">S'inscrire</a>
+        <a href="signin.php" class="border border-purple-600 text-purple-400 px-4 py-2 rounded-lg hover:bg-purple-600 hover:text-white transition text-sm">Se connecter</a>
+        <a href="signup.php" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition text-sm">S'inscrire</a>
     </nav>
 </header>
 
 <main class="flex items-center justify-center mt-20 px-4">
     <div class="bg-gray-900 rounded-2xl p-8 shadow-lg w-full max-w-md border border-gray-800">
         <h2 class="text-2xl font-bold mb-6 text-center">Se connecter</h2>
+
+
+        <?php if ($erreur): ?>
+            <div class="bg-red-900 border border-red-700 text-red-300 px-4 py-3 rounded-lg mb-4 text-sm">
+                <?= htmlspecialchars($erreur) ?>
+            </div>
+        <?php endif; ?>
 
         <form action="signin.php" method="post" class="flex flex-col gap-4">
 
@@ -42,7 +82,7 @@
 
         <p class="text-center text-gray-500 mt-4 text-sm">
             Pas encore de compte ?
-            <a href="signup.html" class="text-purple-400 hover:underline">S'inscrire</a>
+            <a href="signup.php" class="text-purple-400 hover:underline">S'inscrire</a>
         </p>
     </div>
 </main>
