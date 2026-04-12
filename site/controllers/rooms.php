@@ -1,18 +1,12 @@
 <?php
+require_once __DIR__ . '/../models/user.php';
+session_start();
 require __DIR__ . '/common/db.php';
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
-/*$messages = [];
+// Fetch all available rooms from the database
+$query = $db->query("SELECT * FROM room WHERE status = 'available'");
+$rooms = $query->fetchAll(PDO::FETCH_ASSOC);
 
-if (isset($_SESSION['user'])) {
-    $query = $db->prepare("SELECT title, description, season, episode, user_id FROM message");
-    $query->execute();
-    $allMessages = $query->fetchAll(PDO::FETCH_ASSOC);
-
-    
-    
-    $messages = $allMessages;
-}
-*/?>
+// Pass variables and load the view
+require __DIR__ . '/../views/rooms.php';
+?>

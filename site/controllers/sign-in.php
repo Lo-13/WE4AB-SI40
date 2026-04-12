@@ -1,7 +1,7 @@
 <?php
+require_once __DIR__ . '/../models/user.php';
 session_start();
 require __DIR__ . '/common/db.php';
-require_once __DIR__ . '/../models/user.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email =trim($_POST['email']);

@@ -27,27 +27,21 @@ if ($method == 'GET') {
             break;
         case "$contextUrl/rooms":
             require __DIR__ . '/' . $controllerDir . '/rooms.php';
-            require __DIR__ . '/' . $viewDir . '/rooms.php';
             break;
         case "$contextUrl/room-detail":
             require __DIR__ . '/' . $controllerDir . '/room-detail.php';
-            require __DIR__ . '/' . $viewDir . '/room-detail.php';
             break;
         case "$contextUrl/my-reservations":
             require __DIR__ . '/' . $controllerDir . '/my-reservations.php';
-            require __DIR__ . '/' . $viewDir . '/my-reservations.php';
             break;
         case "$contextUrl/reservation":
             require __DIR__ . '/' . $controllerDir . '/reservation.php';
-            require __DIR__ . '/' . $viewDir . '/reservation.php';
             break;
         case "$contextUrl/dashboard":
             require __DIR__ . '/' . $controllerDir . '/dashboard.php';
-            require __DIR__ . '/' . $viewDir . '/dashboard.php';
             break;
         case "$contextUrl/account":
             require __DIR__ . '/' . $controllerDir . '/account.php';
-            require __DIR__ . '/' . $viewDir . '/account.php';
             break;
         case "$contextUrl/sign-in":
             require __DIR__ . '/' . $viewDir . '/sign-in.php';
@@ -78,6 +72,9 @@ if ($method == 'GET') {
             break;
         case "$contextUrl/room-detail":
             require __DIR__ . '/' . $controllerDir . '/room-detail.php';
+            break;
+        case "$contextUrl/reservation":
+            require __DIR__ . '/' . $controllerDir . '/reservation.php';
             break;
         default:
             http_response_code(404);
