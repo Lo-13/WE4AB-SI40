@@ -20,8 +20,13 @@ include 'partials/header.php';
 
             <div>
                 <label class="text-gray-400 text-sm mb-1 block">Mot de passe</label>
-                <input type="password" name="password" placeholder="••••••••" required
-                       class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500"/>
+                <div class="relative">
+                    <input type="password" id="signin-password" name="password" placeholder="••••••••" required
+                           class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 pr-10"/>
+                    <button type="button" class="toggle-password absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-white" data-target="signin-password">
+                        👁️
+                    </button>
+                </div>
             </div>
 
             <button type="submit"

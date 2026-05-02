@@ -45,20 +45,35 @@ include 'partials/header.php';
 
             <div>
                 <label class="text-gray-400 text-sm mb-1 block">Mot de passe</label>
-                <input type="password" name="password" required
-                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,128}"
-                       title="8 caractères min, 1 majuscule, 1 chiffre"
-                       class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500"/>
+                <div class="relative">
+                    <input type="password" id="password-input" name="password" required
+                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,128}"
+                           title="8 caractères min, 1 majuscule, 1 chiffre"
+                           class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 pr-10"/>
+                    <button type="button" class="toggle-password absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-white" data-target="password-input">
+                        👁️
+                    </button>
+                </div>
+                <div class="mt-2 h-1 w-full bg-gray-700 rounded-full overflow-hidden">
+                    <div id="password-strength-bar" class="h-full w-0 transition-all duration-300"></div>
+                </div>
+                <p id="password-strength-text" class="text-xs mt-1 empty:hidden"></p>
             </div>
 
             <div>
                 <label class="text-gray-400 text-sm mb-1 block">Confirmer le mot de passe</label>
-                <input type="password" name="password_conf" required
-                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,128}"
-                       class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500"/>
+                <div class="relative">
+                    <input type="password" id="password-confirm" name="password_conf" required
+                           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,128}"
+                           class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 pr-10"/>
+                    <button type="button" class="toggle-password absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-white" data-target="password-confirm">
+                        👁️
+                    </button>
+                </div>
+                <p id="password-match-error" class="text-red-500 text-xs mt-1 hidden">Les mots de passe ne correspondent pas</p>
             </div>
 
-            <button type="submit"
+            <button type="submit" id="signup-submit"
                     class="bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition font-semibold mt-2">
                 Créer mon compte
             </button>

@@ -19,7 +19,7 @@ $user = $_SESSION['user'] ?? null;
         <nav class="flex gap-4 items-center">
             <a href="rooms" class="text-gray-400 hover:text-white transition">Salles</a>
             <?php if ($user): ?>
-                <a href="dashboard" class="text-gray-400 hover:text-white transition">Dashboard</a>
+                <a href="my-reservations" class="text-gray-400 hover:text-white transition">Mes Réservations</a>
                 <span class="text-purple-400 text-sm font-medium border-l border-gray-700 pl-4"><?= htmlspecialchars($user->email) ?></span>
                 <a href="sign-out" class="text-red-400 hover:text-red-300 transition text-sm">Déconnexion</a>
             <?php else: ?>
