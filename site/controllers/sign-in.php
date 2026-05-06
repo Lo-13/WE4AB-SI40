@@ -16,7 +16,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userObj->id = $user['id'];
         $userObj->email = $user['email'];
         $userObj->name = $user['name'];
+        $userObj->last_name = $user['last_name'];
         $userObj->role = $user['role'];
+        $userObj->registration_date = $user['registration_date'];
 
         $_SESSION['user'] = $userObj;
 
@@ -32,3 +34,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+

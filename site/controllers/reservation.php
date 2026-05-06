@@ -1,9 +1,24 @@
 <?php
 require_once __DIR__ . '/../models/user.php';
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require __DIR__ . '/common/db.php';
 
 if (!isset($_SESSION['user'])) {
+    header('Location: sign-in');
+    exit;
+}
+
+$userQuery = $db->prepare("SELECT id, email, name, last_name, role, registration_date FROM user WHERE id = :id AND email = :email");
+$userQuery->execute([
+    'id' => $_SESSION['user']->id,
+    'email' => $_SESSION['user']->email,
+]);
+$connectedUser = $userQuery->fetch(PDO::FETCH_ASSOC);
+
+if (!$connectedUser) {
+    session_destroy();
     header('Location: sign-in');
     exit;
 }
@@ -19,6 +34,15 @@ $query->execute(['id' => $roomId]);
 $room = $query->fetch(PDO::FETCH_ASSOC);
 
 if (!$room) {
+    header('Location: rooms');
+    exit;
+}
+
+$gameQuery = $db->prepare("SELECT game_id FROM room_game WHERE room_id = :room_id ORDER BY game_id ASC LIMIT 1");
+$gameQuery->execute(['room_id' => $roomId]);
+$gameId = (int) $gameQuery->fetchColumn();
+
+if ($gameId === 0) {
     header('Location: rooms');
     exit;
 }
@@ -42,11 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $stmt = $db->prepare("INSERT INTO reservation 
         (user_id, room_id, game_id, date_reservation, date_begin, date_end, nb_player, status, total_price) 
-        VALUES (:user_id, :room_id, 0, :date_reservation, :date_begin, :date_end, :nb_player, 0, :total_price)");
+        VALUES (:user_id, :room_id, :game_id, :date_reservation, :date_begin, :date_end, :nb_player, 0, :total_price)");
         
     $stmt->execute([
-        'user_id' => $_SESSION['user']->id,
+        'user_id' => $connectedUser['id'],
         'room_id' => $roomId,
+        'game_id' => $gameId,
         'date_reservation' => $dateRes,
         'date_begin' => $dateBegin,
         'date_end' => $dateEnd,
@@ -60,3 +85,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 require __DIR__ . '/../views/reservation.php';
 ?>
+

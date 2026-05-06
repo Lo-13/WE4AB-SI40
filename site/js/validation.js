@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Password Visibility Toggle
     const togglePasswordButtons = document.querySelectorAll('.toggle-password');
     togglePasswordButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -8,22 +7,20 @@ document.addEventListener('DOMContentLoaded', function() {
             if (input) {
                 if (input.type === 'password') {
                     input.type = 'text';
-                    this.textContent = '🙈'; // Eye closed icon
+                    this.textContent = 'masquer';
                 } else {
                     input.type = 'password';
-                    this.textContent = '👁️'; // Eye open icon
+                    this.textContent = 'voir';
                 }
             }
         });
     });
 
-    // 2. Real-time Password Match and Strength (Sign-up page)
     const passwordInput = document.getElementById('password-input');
     const confirmInput = document.getElementById('password-confirm');
     const matchErrorText = document.getElementById('password-match-error');
     const submitBtn = document.getElementById('signup-submit');
     
-    // Password strength elements
     const strengthBar = document.getElementById('password-strength-bar');
     const strengthText = document.getElementById('password-strength-text');
 
@@ -45,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
             }
         } else {
-            // Reset if empty
             confirmInput.classList.remove('border-red-500', 'focus:border-red-500', 'border-green-500', 'focus:border-green-500');
             matchErrorText.classList.add('hidden');
             submitBtn.disabled = false;
@@ -62,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (password.match(/[a-z]/)) strength += 1;
         if (password.match(/[0-9]/)) strength += 1;
 
-        // Reset classes
         strengthBar.className = 'h-full transition-all duration-300 rounded-full w-0';
 
         if (password.length === 0) {
@@ -93,4 +88,106 @@ document.addEventListener('DOMContentLoaded', function() {
             evaluatePasswordStrength(passwordInput.value);
         });
     }
+
+    const calendarDateInput = document.getElementById('admin-calendar-date');
+    const calendarList = document.getElementById('admin-calendar-list');
+
+    function formatReservationDate(value, mode) {
+        const date = new Date(value.replace(' ', 'T'));
+        return mode === 'date'
+            ? date.toLocaleDateString('fr-FR')
+            : date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function getStatusBadge(status) {
+        const normalizedStatus = String(status);
+
+        if (normalizedStatus === '1') {
+            return { text: 'Confirme', classes: 'bg-green-900 text-green-400' };
+        }
+        if (normalizedStatus === '2') {
+            return { text: 'Refuse', classes: 'bg-red-900 text-red-400' };
+        }
+        return { text: 'En attente', classes: 'bg-yellow-900 text-yellow-400' };
+    }
+
+    function renderCalendarReservations(reservations) {
+        if (!calendarList) return;
+
+        calendarList.textContent = '';
+
+        if (!reservations.length) {
+            const empty = document.createElement('p');
+            empty.className = 'text-gray-500 text-sm';
+            empty.textContent = 'Aucune reservation pour cette date.';
+            calendarList.appendChild(empty);
+            return;
+        }
+
+        reservations.forEach(reservation => {
+            const card = document.createElement('article');
+            card.className = 'bg-gray-800 rounded-lg p-4 border border-gray-700';
+
+            const row = document.createElement('div');
+            row.className = 'flex justify-between items-start gap-4';
+
+            const content = document.createElement('div');
+
+            const title = document.createElement('h4');
+            title.className = 'font-semibold';
+            title.textContent = reservation.room_name;
+
+            const dateLine = document.createElement('p');
+            dateLine.className = 'text-gray-400 text-sm';
+            dateLine.textContent = `${formatReservationDate(reservation.date_begin, 'date')} - ${formatReservationDate(reservation.date_begin, 'time')} a ${formatReservationDate(reservation.date_end, 'time')}`;
+
+            const details = document.createElement('p');
+            details.className = 'text-gray-500 text-sm';
+            details.textContent = `${reservation.user_name} ${reservation.user_last_name} - ${reservation.nb_player} joueurs`;
+
+            const badgeData = getStatusBadge(reservation.status);
+            const badge = document.createElement('span');
+            badge.className = `${badgeData.classes} text-xs px-3 py-1 rounded-full whitespace-nowrap`;
+            badge.textContent = badgeData.text;
+
+            content.append(title, dateLine, details);
+            row.append(content, badge);
+            card.appendChild(row);
+            calendarList.appendChild(card);
+        });
+    }
+
+    async function loadCalendarReservations(date) {
+        if (!calendarList) return;
+
+        calendarList.innerHTML = '<p class="text-gray-500 text-sm">Chargement du calendrier...</p>';
+
+        try {
+            const response = await fetch(`dashboard?ajax=calendar&date=${encodeURIComponent(date)}`, {
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (!response.ok) {
+                throw new Error('Reponse serveur invalide');
+            }
+
+            const reservations = await response.json();
+            renderCalendarReservations(reservations);
+        } catch (error) {
+            calendarList.innerHTML = '<p class="text-red-400 text-sm">Impossible de charger les reservations.</p>';
+        }
+    }
+
+    if (calendarDateInput && calendarList) {
+        try {
+            renderCalendarReservations(JSON.parse(calendarList.dataset.initialReservations || '[]'));
+        } catch (error) {
+            renderCalendarReservations([]);
+        }
+
+        calendarDateInput.addEventListener('change', () => {
+            loadCalendarReservations(calendarDateInput.value);
+        });
+    }
 });
+

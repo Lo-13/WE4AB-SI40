@@ -8,7 +8,6 @@ $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 $contextUrl = ''; 
 
-// 2. Pointer vers le bon dossier
 $viewDir = 'site/views';
 $controllerDir = 'site/controllers';
 
@@ -75,6 +74,9 @@ if ($method == 'GET') {
             break;
         case "$contextUrl/reservation":
             require __DIR__ . '/' . $controllerDir . '/reservation.php';
+            break;
+        case "$contextUrl/dashboard":
+            require __DIR__ . '/' . $controllerDir . '/dashboard.php';
             break;
         default:
             http_response_code(404);

@@ -6,6 +6,6 @@ $_SESSION = array();
 
 session_destroy();
 
-header("Location: /home"); // Adjust 'index.php' to your actual home page
+header("Location: /home");
 exit;
 ?>
