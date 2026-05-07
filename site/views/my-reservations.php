@@ -3,10 +3,7 @@ $title = "My Reservations";
 $reservations = $reservations ?? [];
 include 'partials/header.php';
 ?>
-
-<body class="bg-gray-950 text-white min-h-screen">
-
-
+ 
 
 <main class="max-w-3xl mx-auto px-4 py-12">
     <h2 class="text-3xl font-bold mb-8">Mes reservations</h2>

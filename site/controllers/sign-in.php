@@ -28,7 +28,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else if ($userObj->role == 'user') {
             header('Location: home');
             exit;
-        } else {
+        } else if ($userObj->role == 'super_admin') {
+            header('Location: dashboard_superadmin');
+            exit;
+        }
+        else {
             $erreur = 'Email ou mot de passe incorrect';
         }
     }

@@ -39,6 +39,9 @@ if ($method == 'GET') {
         case "$contextUrl/dashboard":
             require __DIR__ . '/' . $controllerDir . '/dashboard.php';
             break;
+        case "$contextUrl/dashboard_superadmin":
+            require __DIR__ . '/' . $controllerDir . '/dashboard_superadmin.php';
+            break; 
         case "$contextUrl/account":
             require __DIR__ . '/' . $controllerDir . '/account.php';
             break;
@@ -78,6 +81,9 @@ if ($method == 'GET') {
         case "$contextUrl/dashboard":
             require __DIR__ . '/' . $controllerDir . '/dashboard.php';
             break;
+        case "$contextUrl/dashboard_superadmin":
+            require __DIR__ . '/' . $controllerDir . '/dashboard_superadmin.php';
+            break;  
         default:
             http_response_code(404);
             require __DIR__ . '/' . $viewDir . '/404.php';

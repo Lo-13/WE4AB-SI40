@@ -2,10 +2,7 @@
 $title = "Sign Out"; 
 include 'partials/header.php'; 
 ?>
-
-<body class="bg-gray-950 text-white min-h-screen">
-
-
+ 
 
 <main class="flex items-center justify-center mt-32 px-4">
     <div class="bg-gray-900 rounded-2xl p-8 border border-gray-800 text-center max-w-sm w-full">

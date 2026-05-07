@@ -12,10 +12,7 @@ $games = $games ?? [];
 $comments = $comments ?? [];
 include 'partials/header.php';
 ?>
-
-<body class="bg-gray-950 text-white min-h-screen">
-
-
+ 
 
 <main class="max-w-3xl mx-auto px-4 py-12">
     <a href="rooms" class="text-gray-500 hover:text-white text-sm mb-6 inline-block">Retour aux salles</a>

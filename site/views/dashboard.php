@@ -16,9 +16,7 @@ $clients = $clients ?? [];
 
 include 'partials/header.php';
 ?>
-
-<body class="bg-gray-950 text-white min-h-screen">
-
+ 
 <main class="max-w-6xl mx-auto px-4 py-12">
     <h2 class="text-3xl font-bold mb-8">Espace admin</h2>
 

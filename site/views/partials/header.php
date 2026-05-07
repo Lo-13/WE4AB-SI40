@@ -13,7 +13,7 @@ $user = $_SESSION['user'] ?? null;
     <title><?= $title ?? "GamingRooms" ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-950 text-white min-h-screen">
+<body class="bg-gray-950 text-white min-h-screen flex flex-col">
     <header class="bg-gray-900 border-b border-purple-900 px-8 py-4 flex justify-between items-center">
         <a href="home" class="text-purple-400 text-xl font-semibold">GamingRooms</a>
         <nav class="flex gap-4 items-center">
@@ -21,6 +21,9 @@ $user = $_SESSION['user'] ?? null;
             <?php if ($user): ?>
                 <?php if ($user->role === 'admin'): ?>
                     <a href="dashboard" class="text-purple-400 hover:text-purple-300 transition">Admin</a>
+                <?php endif; ?>
+                <?php if ($user->role === 'super_admin'): ?>
+                      <a href="dashboard_superadmin" class="text-purple-400 hover:text-purple-300 transition">Super Admin</a>
                 <?php endif; ?>
                 <a href="my-reservations" class="text-gray-400 hover:text-white transition">Mes Reservations</a>
                 <a href="account" class="text-gray-400 hover:text-white transition">Mon compte</a>

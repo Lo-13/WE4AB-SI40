@@ -3,6 +3,26 @@ body {
     margin: 0;
 }
 
+/* Sticky footer: make body a column flex container and let main grow */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Ensure the main content expands to push footer to bottom when needed */
+body > main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+}
+
 .margin-left-right {
     margin-left: 10em;
     margin-right: 10em;

@@ -2,10 +2,6 @@
 $title = "Sign In"; 
 include 'partials/header.php'; 
 ?>
-
-<body class="bg-gray-950 text-white min-h-screen">
-
-
 <main class="flex items-center justify-center mt-20 px-4">
     <div class="bg-gray-900 rounded-2xl p-8 shadow-lg w-full max-w-md border border-gray-800">
         <h2 class="text-2xl font-bold mb-6 text-center">Se connecter</h2>
