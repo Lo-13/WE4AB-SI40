@@ -1,4 +1,8 @@
 <?php
+/*
+En-tete commun du site.
+Il contient la navigation et adapte les liens selon le role de l'utilisateur.
+ */
 require_once __DIR__ . '/../../models/user.php';
 
 if (session_status() === PHP_SESSION_NONE) {

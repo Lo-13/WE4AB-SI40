@@ -1,3 +1,10 @@
+<?php
+/*
+Pied de page commun.
+Il charge les scripts JavaScript utilises par les pages du projet.
+JULIE FOOTER
+ */
+?>
     <script src="/site/js/validation.js"></script>
     <script src="/site/js/animations.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

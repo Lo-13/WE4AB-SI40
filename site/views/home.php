@@ -1,4 +1,8 @@
 <?php
+/*
+Vue de la page d'accueil.
+Elle sert d'entree simple vers la page des salles etc ....
+ */
 $title = "Home"; 
 include 'partials/header.php'; 
 ?>

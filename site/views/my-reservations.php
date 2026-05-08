@@ -1,4 +1,8 @@
 <?php
+/*
+Vue des reservations du user connecte.
+Elle affiche aussi les informations de paiement si elles existent.
+ */
 $title = "My Reservations";
 $reservations = $reservations ?? [];
 include 'partials/header.php';

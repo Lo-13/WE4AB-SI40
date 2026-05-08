@@ -1,4 +1,9 @@
 <?php
+/*
+Controleur de reservation.
+Il verifie l'utilisateur connecte, controle la salle demandee,
+puis enregistre une nouvelle reservation dans la base.
+ */
 require_once __DIR__ . '/../models/user.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -18,6 +23,7 @@ $userQuery->execute([
 $connectedUser = $userQuery->fetch(PDO::FETCH_ASSOC);
 
 if (!$connectedUser) {
+    // Cette verification evite d'utiliser une ancienne session apres reimport de la base.
     session_destroy();
     header('Location: sign-in');
     exit;
@@ -60,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $start = new DateTime($dateBegin);
     $end = new DateTime($dateEnd);
     $diff = $start->diff($end);
+    // Le prix total est calcule a partir de la duree et du tarif horaire de la salle.
     $hours = $diff->h + ($diff->days * 24) + ($diff->i / 60);
     if ($hours <= 0) $hours = 1;
     $totalPrice = $hours * $room['hourly_rate'];

@@ -1,4 +1,8 @@
 <?php
+/*
+Vue du formulaire de connexion.
+Le traitement des identifiants est fait dans controleur sign-in.php.
+ */
 $title = "Sign In"; 
 include 'partials/header.php'; 
 ?>

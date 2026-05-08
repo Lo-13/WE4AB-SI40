@@ -1,4 +1,9 @@
 <?php
+/*
+Controleur de la sign up
+Donc là user s'enregistre envoie les données et vérifie avant que les
+mdp soit les mêmes, email différent etc ...
+ */
 require_once __DIR__ . '/../models/user.php';
 session_start();
 require __DIR__ . '/common/db.php';

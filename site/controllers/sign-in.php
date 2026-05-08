@@ -1,4 +1,8 @@
 <?php
+/*
+Controleur de la page sign in.
+Permet simplement de se connecter et vérifier mdp, rôle etc...
+ */
 require_once __DIR__ . '/../models/user.php';
 session_start();
 require __DIR__ . '/common/db.php';

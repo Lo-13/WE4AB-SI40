@@ -1,4 +1,10 @@
 <?php
+/*
+Controleur des reservations d'un user.
+Il affiche les reservations de l'utilisateur connecte
+et aussi les informations de paiement si elles existent.
+Ici même problème avec DB, voir controller/dashboard.php
+ */
 require_once __DIR__ . '/../models/user.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

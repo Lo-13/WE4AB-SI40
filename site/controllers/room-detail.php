@@ -1,4 +1,8 @@
 <?php
+/*
+Controleur du détail d'une room.
+Il charge la room choisie, les jeux associes et les commentaires.
+ */
 require_once __DIR__ . '/../models/user.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -29,6 +33,7 @@ $gamesQuery = $db->prepare("
 $gamesQuery->execute(['room_id' => $room['id']]);
 $games = $gamesQuery->fetchAll(PDO::FETCH_ASSOC);
 
+// Les avis sont relies a la salle en passant par la reservation qui a ete laissee par un client.
 $commentsQuery = $db->prepare("
     SELECT c.content, c.rate, c.date, u.name, u.last_name
     FROM comment c

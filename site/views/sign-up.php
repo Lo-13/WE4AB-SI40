@@ -1,4 +1,8 @@
 <?php
+/*
+Vue du formulaire d'inscription.
+Le controleur sign-up.php cree ensuite l'utilisateur en base.
+ */
 $title = "Sign Up"; 
 include 'partials/header.php'; 
 ?>

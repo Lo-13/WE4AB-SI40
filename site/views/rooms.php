@@ -1,4 +1,8 @@
 <?php
+/*
+Vue de la liste des rooms.
+Elle affiche les filtres/tri et les salles recuperees par le controleur rooms.php.
+ */
 $title = "Rooms";
 $rooms = $rooms ?? [];
 $sort = $sort ?? 'default';

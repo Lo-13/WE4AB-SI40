@@ -1,4 +1,8 @@
 <?php
+/*
+Vue d'erreur 404.
+Elle est affichee quand aucune route du projet ne correspond a l'URL.
+ */
 $title = "404 - Page not found"; 
 include 'partials/header.php'; 
 ?>

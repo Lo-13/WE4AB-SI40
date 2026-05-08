@@ -1,4 +1,8 @@
 <?php
+/*
+Vue du detail d'une room.
+Elle montre la salle, les jeux disponibles et les avis clients.
+ */
 $title = "Room Detail";
 $room = $room ?? [
     'id' => 0,

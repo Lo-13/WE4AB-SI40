@@ -1,4 +1,8 @@
 <?php
+/*
+Vue de la reservation d'une room.
+Elle est chargee apres la verification de la salle dans reservation.php.
+ */
 $title = "Reservation";
 $room = $room ?? [
     'id' => 0,

@@ -19,8 +19,7 @@ SET time_zone = "+00:00";
 
 --
 -- Base de donnees : `we4x_si40_db`
-CREATE DATABASE we4x_si40_db;
-USE we4x_si40_db;
+--
 
 -- --------------------------------------------------------
 

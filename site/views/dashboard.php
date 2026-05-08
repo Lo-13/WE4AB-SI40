@@ -1,4 +1,12 @@
 <?php
+/*
+Vue de l'espace admin.
+Elle affiche le contenu prepare par dashboard.php :
+statistiques, reservations, clients et calendrier.
+ */
+
+
+// ce bloc sert a rendre la page plus robuste. Meme si une variable manque dans le controleur, la page continue de fonctionner.
 $title = "Admin";
 $nbRes = $nbRes ?? 0;
 $nbRooms = $nbRooms ?? 0;

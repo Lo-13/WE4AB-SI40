@@ -1,4 +1,15 @@
+/*
+Ce fichier gère toutes les animations et interactions visuelles du site.
+Il contient 4 fonctionnalités principales :
+1. Apparition progressive des éléments au scroll (scroll-reveal)
+2. Effet de inclinaison 3D des cartes au survol (tilt-card)
+3. Défilement fluide vers les ancres (#section)
+4 Système de notifications temporaires (toast)
+ */
+
+
 document.addEventListener('DOMContentLoaded', function() {
+
 
     const revealElements = document.querySelectorAll('.scroll-reveal');
 

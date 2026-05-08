@@ -1,11 +1,25 @@
 <?php
+/*
+Controleur de l'espace admin.
+Il centralise l'affichage du tableau de bord, les listes utiles
+et la gestion des demandes de reservation ainsi qu'un affichage avec un calendrier
+Petite précision sur l'erreur $db affichée sur PhpStorm, phpstormanalyse le code
+statiquement de ce que j'ai compris, entre autreil lit les fichiers sans les
+exécuter. Quand il voit ça require __DIR__ . '/common/db.php', il ne suit
+pas ce fichier pour savoir que $db y est défini.
+ Donc pour lui $db n'existe pas et donc il le met en rouge.
+Mais quand PHP exécute le code, il fait bien le require.
+ */
 require_once __DIR__ . '/../models/user.php';
+
+// Ici précision sécurité car démarre la session si pas déjà connecté
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require __DIR__ . '/common/db.php';
 
 if (!isset($_SESSION['user']) || $_SESSION['user']->role !== 'admin') {
+    // Si l'appel vient de l'AJAX du calendrier, on renvoie du JS plutot qu'une page HTML.
     if (isset($_GET['ajax'])) {
         http_response_code(401);
         header('Content-Type: application/json; charset=utf-8');
@@ -21,6 +35,7 @@ $adminMessage = $_GET['message'] ?? null;
 $adminError = $_GET['error'] ?? null;
 
 function fetchCalendarReservations(PDO $db, string $date): array {
+    // Cette requete alimente le calendrier en listant les reservations d'une date precise.
     $query = $db->prepare("
         SELECT r.id, r.date_begin, r.date_end, r.nb_player, r.status, r.total_price,
                rm.name AS room_name, u.name AS user_name, u.last_name AS user_last_name
@@ -61,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reservation_id'], $_P
         header('Location: dashboard?message=' . urlencode("La demande a ete refusee.") . '&date=' . urlencode(substr($reservation['date_begin'], 0, 10)));
         exit;
     } elseif ($reservationAction === 'accept') {
+        // On verifie qu'une reservation deja confirmee n'occupe pas le meme creneau.
         $conflictQuery = $db->prepare("
             SELECT COUNT(*)
             FROM reservation

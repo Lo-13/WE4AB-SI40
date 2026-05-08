@@ -1,4 +1,9 @@
 <?php
+/*
+Fichier de connexion a la base de donnees.
+Il est inclus dans les controleurs qui ont eux besoin d'acceder a MySQL.
+La variable $db obtenue ici est ensuite reutilisee pour les requetes PDO.
+ */
 $dbname = 'we4x_si40_db';
 
 function getDbHost() {

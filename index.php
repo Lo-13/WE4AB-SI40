@@ -1,4 +1,9 @@
 <?php
+/*
+C'est le Routeur principal du projet.
+Ce fichier analyse l'URL demandee et charge soit une vue simple,
+soit un controleur chargé de recuperer les donnees avant affichage.
+ */
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
@@ -18,6 +23,7 @@ function normalize_path($path) {
 $request = normalize_path($request);
 
 if ($method == 'GET') {
+    // Les pages en GET affichent le contenu du site sans modifier la base.
     switch ($request) {
         case "$contextUrl/":
         case "$contextUrl/home":
@@ -62,6 +68,7 @@ if ($method == 'GET') {
             require __DIR__ . '/' . $viewDir . '/404.php';
     }
 } else if ($method == 'POST') {
+    // Les pages en POST servent surtout a traiter les formulaires.
     switch ($request) {
         case "$contextUrl/sign-in":
             require __DIR__ . '/' . $controllerDir . '/sign-in.php';

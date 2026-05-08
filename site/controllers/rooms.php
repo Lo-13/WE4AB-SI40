@@ -1,4 +1,9 @@
 <?php
+/*
+Controleur de la page des rooms.
+Il recupere les parametres de TRI et de FILTRE,
+construit la requete SQL et charge la vue associée.
+ */
 require_once __DIR__ . '/../models/user.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -56,6 +61,7 @@ $sql = "
     GROUP BY room.id
     $orderBy
 ";
+// GROUP_CONCAT permet d'afficher sur une meme ligne les jeux relies a une salle.
 $query = $db->prepare($sql);
 $query->execute($params);
 $rooms = $query->fetchAll(PDO::FETCH_ASSOC);

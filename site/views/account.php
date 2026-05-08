@@ -1,4 +1,8 @@
 <?php
+/*
+Vue du compte utilisateur.
+Elle affiche les informations du membre actuellement connecte.
+ */
 $title = "Account";
 $user = $user ?? (object) [
     'name' => '',

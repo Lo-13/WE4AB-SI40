@@ -1,4 +1,10 @@
+/*
+ * Script JavaScript principal du site.
+ * Il gere la verification du formulaire d'inscription
+ * et le chargement dynamique du calendrier admin.
+ */
 document.addEventListener('DOMContentLoaded', function() {
+    // Meme script pour deux usages : validation du formulaire d'inscription et calendrier admin.
     const togglePasswordButtons = document.querySelectorAll('.toggle-password');
     togglePasswordButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -25,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const strengthText = document.getElementById('password-strength-text');
 
     function checkPasswordMatch() {
+        // Si les deux champs ne correspondent pas, on bloque l'envoi du formulaire.
         if (!passwordInput || !confirmInput || !matchErrorText || !submitBtn) return;
 
         if (confirmInput.value.length > 0) {
@@ -50,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function evaluatePasswordStrength(password) {
+        // Verification simple de la robustesse du mot de passe.
         if (!strengthBar || !strengthText) return;
 
         let strength = 0;
@@ -112,6 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function renderCalendarReservations(reservations) {
+        // Reconstruit la liste HTML a partir du JSON renvoye par le controleur PHP.
         if (!calendarList) return;
 
         calendarList.textContent = '';
@@ -163,6 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
         calendarList.innerHTML = '<p class="text-gray-500 text-sm">Chargement du calendrier...</p>';
 
         try {
+            // L'espace admin recharge uniquement la liste des reservations de la date choisie.
             const response = await fetch(`dashboard?ajax=calendar&date=${encodeURIComponent(date)}`, {
                 headers: { 'Accept': 'application/json' }
             });
