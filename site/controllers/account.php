@@ -14,5 +14,9 @@ $query = $db->prepare("SELECT * FROM user WHERE id = :id");
 $query->execute([':id' => $_SESSION['user']->id]);
 $user = $query->fetch(PDO::FETCH_OBJ);
 
+$roomsQuery = $db->prepare("SELECT * FROM room");
+$roomsQuery->execute();
+$rooms = $roomsQuery->fetchAll(PDO::FETCH_OBJ);
+
 require __DIR__ . '/../views/account.php';
 ?>
