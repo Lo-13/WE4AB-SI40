@@ -58,3 +58,7 @@ header nav button:hover {
     background-color: #008CBA;
 }
 
+#map {
+    height: 600px;
+    width : 100%;
+}

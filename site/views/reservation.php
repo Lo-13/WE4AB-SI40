@@ -3,7 +3,7 @@
 Vue de la reservation d'une room.
 Elle est chargee apres la verification de la salle dans reservation.php.
  */
-$title = "Reservation";
+$title = "Réservation";
 $room = $room ?? [
     'id' => 0,
     'name' => '',

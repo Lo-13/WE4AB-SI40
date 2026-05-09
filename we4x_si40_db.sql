@@ -1,9 +1,9 @@
-﻿-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hote : localhost
--- Genere le : ven. 24 avr. 2026 a 18:05
+-- Hôte : localhost
+-- Généré le : sam. 09 mai 2026 à 13:24
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -18,8 +18,30 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de donnees : `we4x_si40_db`
+-- Base de données : `we4x_si40_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `admin_role_request`
+--
+
+CREATE TABLE `admin_role_request` (
+  `request_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `request_status` enum('accepted','denied','pending','') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `admin_role_request`
+--
+
+INSERT INTO `admin_role_request` (`request_id`, `user_id`, `room_id`, `request_status`) VALUES
+(9, 12, 8, 'pending'),
+(10, 24, 9, 'pending'),
+(11, 25, 10, 'pending');
 
 -- --------------------------------------------------------
 
@@ -38,12 +60,11 @@ CREATE TABLE `comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `comment`
+-- Déchargement des données de la table `comment`
 --
 
 INSERT INTO `comment` (`id`, `user_id`, `reservation_id`, `content`, `rate`, `date`, `is_valid`) VALUES
-(1, 1, 1, 'Salle propre, rien a signaler.', 4, '2026-05-10 18:30:00', 1),
-(2, 2, 2, 'Bonne soiree, on a bien joue.', 4, '2026-05-11 21:15:00', 1);
+(3, 55, 60, 'c\'était génial', 10, '2026-05-09 11:24:02', 0);
 
 -- --------------------------------------------------------
 
@@ -61,7 +82,7 @@ CREATE TABLE `game` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `game`
+-- Déchargement des données de la table `game`
 --
 
 INSERT INTO `game` (`id`, `title`, `genre`, `nb_player_max`, `plateform`, `description`) VALUES
@@ -74,7 +95,7 @@ INSERT INTO `game` (`id`, `title`, `genre`, `nb_player_max`, `plateform`, `descr
 (7, 'Super Smash Bros. Ultimate', 7, 8, 'Nintendo Switch', 'Jeu de combat festif avec de nombreux personnages.'),
 (8, 'Beat Saber', 12, 4, 'VR', 'Jeu de rythme en realite virtuelle.'),
 (9, 'Minecraft', 10, 10, 'PC', 'Jeu de construction et de survie en multijoueur.'),
-(10, 'Street Fighter 6', 7, 2, 'PlayStation 5', 'Jeu de combat technique et competitif.' );
+(10, 'Street Fighter 6', 7, 2, 'PlayStation 5', 'Jeu de combat technique et competitif.');
 
 -- --------------------------------------------------------
 
@@ -88,7 +109,7 @@ CREATE TABLE `game_genre` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `game_genre`
+-- Déchargement des données de la table `game_genre`
 --
 
 INSERT INTO `game_genre` (`game_id`, `genre_id`) VALUES
@@ -115,7 +136,7 @@ CREATE TABLE `game_plateform` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `game_plateform`
+-- Déchargement des données de la table `game_plateform`
 --
 
 INSERT INTO `game_plateform` (`game_id`, `plateforme_id`) VALUES
@@ -142,16 +163,16 @@ CREATE TABLE `genre` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `genre`
+-- Déchargement des données de la table `genre`
 --
 
 INSERT INTO `genre` (`id`, `name`) VALUES
+(10, 'Aventure'),
+(7, 'Combat'),
+(6, 'Course'),
 (1, 'FPS'),
 (3, 'MOBA'),
 (5, 'Sport'),
-(6, 'Course'),
-(7, 'Combat'),
-(10, 'Aventure'),
 (12, 'VR');
 
 -- --------------------------------------------------------
@@ -170,7 +191,7 @@ CREATE TABLE `payment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `payment`
+-- Déchargement des données de la table `payment`
 --
 
 INSERT INTO `payment` (`id`, `reservation_id`, `amount`, `type`, `date`, `status`) VALUES
@@ -191,13 +212,13 @@ CREATE TABLE `plateform` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `plateform`
+-- Déchargement des données de la table `plateform`
 --
 
 INSERT INTO `plateform` (`id`, `name`) VALUES
+(6, 'Nintendo Switch'),
 (1, 'PC'),
 (2, 'PlayStation 5'),
-(6, 'Nintendo Switch'),
 (8, 'VR');
 
 -- --------------------------------------------------------
@@ -220,14 +241,16 @@ CREATE TABLE `reservation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `reservation`
+-- Déchargement des données de la table `reservation`
 --
 
 INSERT INTO `reservation` (`id`, `user_id`, `room_id`, `game_id`, `date_reservation`, `date_begin`, `date_end`, `nb_player`, `status`, `total_price`) VALUES
-(1, 1, 1, 1, '2026-05-10 14:00:00', '2026-05-10 15:00:00', '2026-05-10 18:00:00', 5, 1, 45),
-(2, 2, 2, 5, '2026-05-11 18:00:00', '2026-05-11 19:00:00', '2026-05-11 21:00:00', 4, 1, 40),
-(3, 1, 4, 8, '2026-05-12 16:00:00', '2026-05-12 17:00:00', '2026-05-12 19:00:00', 4, 0, 36),
-(4, 2, 3, 4, '2026-05-13 15:00:00', '2026-05-13 15:00:00', '2026-05-13 17:00:00', 4, 0, 28);
+(1, 55, 1, 1, '2026-05-10 14:00:00', '2026-05-10 15:00:00', '2026-05-10 18:00:00', 5, 1, 45),
+(2, 2, 1, 5, '2026-05-11 18:00:00', '2026-05-11 19:00:00', '2026-05-11 21:00:00', 4, 1, 40),
+(3, 55, 1, 8, '2026-05-12 16:00:00', '2026-05-12 17:00:00', '2026-05-12 19:00:00', 4, 2, 36),
+(4, 55, 1, 4, '2026-05-13 15:00:00', '2026-05-13 15:00:00', '2026-05-13 17:00:00', 4, 0, 28),
+(5, 11, 1, 5, '2026-05-09 06:44:01', '2026-04-30 14:43:00', '2026-04-30 20:54:00', 3, 0, 124),
+(60, 55, 12, 2, '2026-05-06 12:31:43', '2026-05-07 12:31:43', '2026-05-08 12:31:43', 6, 1, 135);
 
 -- --------------------------------------------------------
 
@@ -242,24 +265,57 @@ CREATE TABLE `room` (
   `capacity` int(11) NOT NULL,
   `hourly_rate` decimal(10,2) NOT NULL,
   `description` text NOT NULL,
-  `status` enum('available','unavailable','maintenance','') NOT NULL
+  `status` enum('available','unavailable','maintenance','') NOT NULL,
+  `latitude` decimal(8,4) NOT NULL,
+  `longitude` decimal(9,4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `room`
+-- Déchargement des données de la table `room`
 --
 
-INSERT INTO `room` (`id`, `name`, `address`, `capacity`, `hourly_rate`, `description`, `status`) VALUES
-(1, 'Alpha PC', '12 Rue Oberkampf, 75011 Paris', 6, 15.00, 'Salle PC compacte avec 6 postes, ecrans 144Hz et casques micro.', 'available'),
-(2, 'Omega Console', '25 Rue Merciere, 69002 Lyon', 8, 20.00, 'Salon console avec PS5, canape, television 4K et jeux multijoueurs.', 'available'),
-(3, 'Nexus Bordeaux', '47 Cours Victor Hugo, 33000 Bordeaux', 10, 14.00, 'Salle polyvalente pour groupes, consoles et postes PC legers.', 'available'),
-(4, 'VR Lab Lille', '6 Rue Nationale, 59000 Lille', 6, 18.00, 'Espace VR avec casques recents et zone de jeu securisee.', 'available'),
-(5, 'Retro Arcade Nantes', '22 Quai de la Fosse, 44000 Nantes', 12, 16.00, 'Salle retro avec bornes arcade et jeux Switch pour soirees entre amis.', 'available'),
-(6, 'Squad Arena Paris', '18 Rue des Petites Ecuries, 75010 Paris', 20, 32.00, 'Grande salle orientee competition avec postes PC alignes et coin briefing.', 'available'),
-(7, 'Console Loft Rennes', '9 Rue Saint-Michel, 35000 Rennes', 6, 13.00, 'Petit loft console confortable pour sessions privees.', 'available'),
-(8, 'ESport Toulouse', '14 Avenue de Muret, 31300 Toulouse', 16, 25.00, 'Salle e-sport pour entrainements d\'equipe et mini-tournois.', 'available'),
-(9, 'Family Gaming Dijon', '4 Rue de la Liberte, 21000 Dijon', 5, 12.50, 'Salle accessible pour familles, jeux cooperatifs et espace detente.', 'available'),
-(10, 'Studio Marseille', '9 Boulevard de Louvain, 13008 Marseille', 4, 22.00, 'Petite salle avec eclairage, micro et PC pour enregistrer ou jouer.', 'available');
+INSERT INTO `room` (`id`, `name`, `address`, `capacity`, `hourly_rate`, `description`, `status`, `latitude`, `longitude`) VALUES
+(1, 'Alpha PC', '12 Rue Oberkampf, 75011 Paris', 6, 15.00, 'Salle PC compacte avec 6 postes, ecrans 144Hz et casques micro.', 'available', 48.8630, 2.3688),
+(2, 'Omega Console', '25 Rue Merciere, 69002 Lyon', 8, 20.00, 'Salon console avec PS5, canape, television 4K et jeux multijoueurs.', 'available', 45.7631, 4.8340),
+(3, 'Nexus Bordeaux', '47 Cours Victor Hugo, 33000 Bordeaux', 10, 14.00, 'Salle polyvalente pour groupes, consoles et postes PC legers.', 'available', 44.8376, -0.5743),
+(4, 'VR Lab Lille', '6 Rue Nationale, 59000 Lille', 6, 18.00, 'Espace VR avec casques recents et zone de jeu securisee.', 'available', 50.6330, 3.0630),
+(5, 'Retro Arcade Nantes', '22 Quai de la Fosse, 44000 Nantes', 12, 16.00, 'Salle retro avec bornes arcade et jeux Switch pour soirees entre amis.', 'available', 47.2115, -1.5680),
+(7, 'Console Loft Rennes', '9 Rue Saint-Michel, 35000 Rennes', 6, 13.00, 'Petit loft console confortable pour sessions privees.', 'available', 48.1139, -1.6816),
+(8, 'ESport Toulouse', '14 Avenue de Muret, 31300 Toulouse', 16, 25.00, 'Salle e-sport pour entrainements d\'equipe et mini-tournois.', 'available', 43.5840, 1.4320),
+(9, 'Family Gaming Dijon', '4 Rue de la Liberte, 21000 Dijon', 5, 12.50, 'Salle accessible pour familles, jeux cooperatifs et espace detente.', 'available', 47.3215, 5.0410),
+(10, 'Studio Marseille', '9 Boulevard de Louvain, 13008 Marseille', 4, 22.00, 'Petite salle avec eclairage, micro et PC pour enregistrer ou jouer.', 'available', 43.2765, 5.3912),
+(11, 'Maison de l\'Esport', '11 Rue Soleillet, 75020 Paris', 40, 30.00, 'Tiers-lieu parisien officiel dédié à l\'esport, arena 600m², régies techniques, consoles next-gen.', 'available', 48.8632, 2.4031),
+(12, 'GameRoom Lyon Sud', '2 Rue du Professeur Appleton, 69007 Lyon', 14, 20.00, 'Salle gaming à Lyon avec 8 PCs, 4 PS5, 2 Xbox Series X, ambiance néon cosy.', 'available', 45.7423, 4.8376),
+(13, 'NexusBox Bordeaux', '47 Cours d\'Alsace-et-Lorraine, 33000 Bordeaux', 10, 17.00, 'Petite salle premium à Bordeaux : PS5, Switch, décoration gaming rétro-futuriste.', 'available', 44.8414, -0.5716),
+(14, 'PixelHub Marseille', '9 Boulevard de Louvain, 13008 Marseille', 18, 19.00, 'Salle gaming en bord de mer : PCs gaming, PS5, ambiance lounge, boissons incluses.', 'maintenance', 43.2765, 5.3912);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `room_administrator`
+--
+
+CREATE TABLE `room_administrator` (
+  `room_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `room_administrator`
+--
+
+INSERT INTO `room_administrator` (`room_id`, `user_id`) VALUES
+(1, 13),
+(2, 14),
+(3, 15),
+(4, 16),
+(5, 17),
+(7, 18),
+(8, 19),
+(9, 20),
+(10, 21),
+(11, 22),
+(12, 23);
 
 -- --------------------------------------------------------
 
@@ -273,7 +329,7 @@ CREATE TABLE `room_game` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `room_game`
+-- Déchargement des données de la table `room_game`
 --
 
 INSERT INTO `room_game` (`room_id`, `game_id`) VALUES
@@ -287,9 +343,6 @@ INSERT INTO `room_game` (`room_id`, `game_id`) VALUES
 (4, 8),
 (5, 6),
 (5, 7),
-(6, 1),
-(6, 2),
-(6, 3),
 (7, 5),
 (7, 6),
 (8, 1),
@@ -309,7 +362,7 @@ CREATE TABLE `room_type_material` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `room_type_material`
+-- Déchargement des données de la table `room_type_material`
 --
 
 INSERT INTO `room_type_material` (`room_id`, `type_material_id`) VALUES
@@ -323,8 +376,6 @@ INSERT INTO `room_type_material` (`room_id`, `type_material_id`) VALUES
 (4, 5),
 (5, 4),
 (5, 2),
-(6, 1),
-(6, 6),
 (7, 2),
 (7, 5),
 (8, 1),
@@ -346,16 +397,16 @@ CREATE TABLE `type_material` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `type_material`
+-- Déchargement des données de la table `type_material`
 --
 
 INSERT INTO `type_material` (`id`, `name`) VALUES
-(1, 'PC Gaming'),
-(2, 'Console'),
-(3, 'Casque VR'),
 (4, 'Borne Arcade'),
-(5, 'Television 4K'),
-(6, 'Ecran 144Hz');
+(3, 'Casque VR'),
+(2, 'Console'),
+(6, 'Ecran 144Hz'),
+(1, 'PC Gaming'),
+(5, 'Television 4K');
 
 -- --------------------------------------------------------
 
@@ -370,22 +421,53 @@ CREATE TABLE `user` (
   `last_name` varchar(100) NOT NULL,
   `age` tinyint(4) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('user','admin') NOT NULL,
+  `role` enum('user','admin','super_admin') NOT NULL,
   `registration_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dechargement des donnees de la table `user`
+-- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`id`, `email`, `name`, `last_name`, `age`, `password`, `role`, `registration_date`) VALUES
-(1, 'julie.client@example.com', 'Julie', 'Bened', 21, '$2y$10$2JlIEryg06SDm3nnpCrUuOHSSV4JYSkZmiOfSNK61kp4eOO/9PmEe', 'user', '2026-04-10 10:00:00'),
-(2, 'antoine.martin@example.com', 'Antoine', 'Martin', 24, '$2y$10$2JlIEryg06SDm3nnpCrUuOHSSV4JYSkZmiOfSNK61kp4eOO/9PmEe', 'user', '2026-04-11 11:00:00'),
-(10, 'admin@gamingrooms.local', 'Admin', 'GamingRooms', 30, '$2y$10$44QOasrRNA9z.BiNhYnb0Om5OHZmViSGfCj9TSko/Ld9yay9i5kmC', 'admin', '2026-04-19 09:00:00');
+(3, 'a.martin@gmail.com', 'Antoine', 'MARTIN', 28, '$2y$10$aAhashExample001aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-01 10:00:00'),
+(4, 'c.dubois@hotmail.fr', 'Claire', 'DUBOIS', 34, '$2y$10$aAhashExample002aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-03 11:30:00'),
+(5, 'l.bernard@gmail.com', 'Lucas', 'BERNARD', 22, '$2y$10$aAhashExample003aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-05 09:15:00'),
+(6, 'm.thomas@yahoo.fr', 'Marie', 'THOMAS', 19, '$2y$10$aAhashExample004aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-07 14:00:00'),
+(7, 'p.robert@gmail.com', 'Pierre', 'ROBERT', 45, '$2y$10$aAhashExample005aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-10 08:30:00'),
+(8, 'e.richard@outlook.com', 'Emma', 'RICHARD', 25, '$2y$10$aAhashExample006aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-12 16:45:00'),
+(9, 'n.petit@gmail.com', 'Nicolas', 'PETIT', 31, '$2y$10$aAhashExample007aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-14 12:00:00'),
+(10, 'j.leroy@gmail.com', 'Julien', 'LEROY', 27, '$2y$10$aAhashExample008aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-16 10:20:00'),
+(11, 's.moreau@hotmail.fr', 'Sophie', 'MOREAU', 23, '$2y$10$aAhashExample009aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-18 09:00:00'),
+(12, 'r.simon@gmail.com', 'Romain', 'SIMON', 38, '$2y$10$aAhashExample010aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-20 17:30:00'),
+(13, 'a.laurent@gmail.com', 'Alice', 'LAURENT', 21, '$2y$10$aAhashExample011aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-09-22 11:00:00'),
+(14, 'k.lefebvre@yahoo.fr', 'Kevin', 'LEFEBVRE', 26, '$2y$10$aAhashExample012aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-09-24 15:00:00'),
+(15, 'i.garcia@gmail.com', 'Inès', 'GARCIA', 29, '$2y$10$aAhashExample013aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-09-26 09:45:00'),
+(16, 'b.martinez@outlook.com', 'Baptiste', 'MARTINEZ', 17, '$2y$10$aAhashExample014aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-09-28 13:00:00'),
+(17, 'c.david@gmail.com', 'Chloé', 'DAVID', 33, '$2y$10$aAhashExample015aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-01 10:30:00'),
+(18, 't.bertrand@hotmail.fr', 'Thomas', 'BERTRAND', 24, '$2y$10$aAhashExample016aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-03 14:20:00'),
+(19, 'z.roux@gmail.com', 'Zoé', 'ROUX', 20, '$2y$10$aAhashExample017aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-05 11:00:00'),
+(20, 'm.vincent@gmail.com', 'Maxime', 'VINCENT', 36, '$2y$10$aAhashExample018aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-07 09:00:00'),
+(21, 'a.fournier@yahoo.fr', 'Anaïs', 'FOURNIER', 22, '$2y$10$aAhashExample019aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-09 16:00:00'),
+(22, 'g.morel@gmail.com', 'Guillaume', 'MOREL', 40, '$2y$10$aAhashExample020aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-11 08:00:00'),
+(23, 'c.girard@outlook.com', 'Camille', 'GIRARD', 25, '$2y$10$aAhashExample021aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-13 10:00:00'),
+(24, 'v.andre@gmail.com', 'Victor', 'ANDRE', 30, '$2y$10$aAhashExample022aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-10-15 13:45:00'),
+(25, 'l.lefevre@hotmail.fr', 'Léa', 'LEFEVRE', 18, '$2y$10$aAhashExample023aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-10-17 12:00:00'),
+(26, 'f.mercier@gmail.com', 'François', 'MERCIER', 50, '$2y$10$aAhashExample024aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-19 09:30:00'),
+(27, 'j.dupont@gmail.com', 'Jade', 'DUPONT', 23, '$2y$10$aAhashExample025aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-21 15:00:00'),
+(55, 'j@gaminggrooms.fr', 'Julie', 'BENED', 24, '$2y$12$VigNs4rsZg17bJjRrjYxj.Rqp6serN/PyEzCX43zdVKIDTz7TvGG2', 'user', '2026-05-09 12:24:34');
 
 --
--- Index pour les tables dechargees
+-- Index pour les tables déchargées
 --
+
+--
+-- Index pour la table `admin_role_request`
+--
+ALTER TABLE `admin_role_request`
+  ADD PRIMARY KEY (`request_id`),
+  ADD KEY `room_id` (`room_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Index pour la table `comment`
@@ -441,15 +523,22 @@ ALTER TABLE `plateform`
 --
 ALTER TABLE `reservation`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `reservation_room_id` (`room_id`),
   ADD KEY `reservation_user_id` (`user_id`),
-  ADD KEY `game_id` (`game_id`);
+  ADD KEY `game_id` (`game_id`),
+  ADD KEY `room_id` (`room_id`);
 
 --
 -- Index pour la table `room`
 --
 ALTER TABLE `room`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `room_administrator`
+--
+ALTER TABLE `room_administrator`
+  ADD KEY `room_id` (`room_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Index pour la table `room_game`
@@ -463,7 +552,7 @@ ALTER TABLE `room_game`
 --
 ALTER TABLE `room_type_material`
   ADD KEY `type_materiel_room` (`room_id`),
-  ADD KEY `type_materiel` (`type_material_id`);
+  ADD KEY `type_materiel` (`type_material_id`) USING BTREE;
 
 --
 -- Index pour la table `type_material`
@@ -479,14 +568,20 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT pour les tables dechargees
+-- AUTO_INCREMENT pour les tables déchargées
 --
+
+--
+-- AUTO_INCREMENT pour la table `admin_role_request`
+--
+ALTER TABLE `admin_role_request`
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `game`
@@ -516,13 +611,13 @@ ALTER TABLE `plateform`
 -- AUTO_INCREMENT pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT pour la table `room`
 --
 ALTER TABLE `room`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pour la table `type_material`
@@ -534,18 +629,27 @@ ALTER TABLE `type_material`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
--- Contraintes pour les tables dechargees
+-- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `admin_role_request`
+--
+ALTER TABLE `admin_role_request`
+  ADD CONSTRAINT `admin_role_request_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `admin_role_request_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `comment`
 --
 ALTER TABLE `comment`
   ADD CONSTRAINT `com_reservation_id` FOREIGN KEY (`reservation_id`) REFERENCES `reservation` (`id`),
-  ADD CONSTRAINT `com_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `com_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `reservation` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `game_genre`
@@ -571,28 +675,29 @@ ALTER TABLE `payment`
 -- Contraintes pour la table `reservation`
 --
 ALTER TABLE `reservation`
-  ADD CONSTRAINT `reservation_room_id` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`),
-  ADD CONSTRAINT `reservation_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `room_administrator`
+--
+ALTER TABLE `room_administrator`
+  ADD CONSTRAINT `room_administrator_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `room_game`
 --
 ALTER TABLE `room_game`
   ADD CONSTRAINT `game_id` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`),
-  ADD CONSTRAINT `room_id` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`);
+  ADD CONSTRAINT `room_id` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `room_type_material`
 --
 ALTER TABLE `room_type_material`
-  ADD CONSTRAINT `type_materiel` FOREIGN KEY (`type_material_id`) REFERENCES `type_material` (`id`),
-  ADD CONSTRAINT `type_materiel_room` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`);
+  ADD CONSTRAINT `type_materiel` FOREIGN KEY (`type_material_id`) REFERENCES `type_material` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `type_materiel_room` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-
-

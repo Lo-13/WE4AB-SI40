@@ -70,6 +70,9 @@ if ($method == 'GET') {
 } else if ($method == 'POST') {
     // Les pages en POST servent surtout a traiter les formulaires.
     switch ($request) {
+        case "$contextUrl/account":
+            require __DIR__ . '/' . $controllerDir . '/account.php';
+            break;
         case "$contextUrl/sign-in":
             require __DIR__ . '/' . $controllerDir . '/sign-in.php';
             break;
@@ -91,6 +94,9 @@ if ($method == 'GET') {
         case "$contextUrl/dashboard_superadmin":
             require __DIR__ . '/' . $controllerDir . '/dashboard_superadmin.php';
             break;  
+        case "$contextUrl/my-reservations":
+            require __DIR__ . '/' . $controllerDir . '/my-reservations.php';
+            break; 
         default:
             http_response_code(404);
             require __DIR__ . '/' . $viewDir . '/404.php';

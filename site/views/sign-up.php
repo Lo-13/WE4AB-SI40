@@ -3,9 +3,16 @@
 Vue du formulaire d'inscription.
 Le controleur sign-up.php cree ensuite l'utilisateur en base.
  */
+$error = $error ?? null;
 $title = "Sign Up"; 
 include 'partials/header.php'; 
 ?>
+
+<?php if ($error): ?>
+    <div class="max-w-md w-full mx-auto mb-4 bg-red-900 border border-red-700 text-red-300 px-4 py-3 rounded-lg">
+        <?= htmlspecialchars($error) ?>
+    </div>
+<?php endif; ?>
  
 
 <main class="flex items-center justify-center mt-12 mb-12 px-4">
@@ -75,12 +82,12 @@ include 'partials/header.php';
 
             <button type="submit" id="signup-submit"
                     class="bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition font-semibold mt-2">
-                Creer mon compte
+                Créer mon compte
             </button>
         </form>
 
         <p class="text-center text-gray-500 mt-4 text-sm">
-            Deja un compte ?
+            Déja un compte ?
             <a href="sign-in" class="text-purple-400 hover:underline">Se connecter</a>
         </p>
     </div>
