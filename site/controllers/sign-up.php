@@ -40,7 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':role'     => $role,
             ]);
             header('Location: /sign-in');
+            exit;
         }
     }
 }
+
+require __DIR__ . '/../views/sign-up.php';
+
 ?>

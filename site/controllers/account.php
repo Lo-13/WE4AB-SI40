@@ -18,5 +18,20 @@ $roomsQuery = $db->prepare("SELECT * FROM room");
 $roomsQuery->execute();
 $rooms = $roomsQuery->fetchAll(PDO::FETCH_OBJ);
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $roomId = $_POST['room_id'] ?? null;
+    $userId = $_SESSION['user']->id;
+
+    $adminrequestQuery = $db->prepare("INSERT INTO admin_role_request (user_id, room_id, request_status) VALUES (:user_id, :room_id, :status)");
+    $adminrequestQuery->execute([
+        ':user_id' => $userId,
+        ':room_id' => $roomId,
+        ':status' => 'pending'
+    ]);
+
+    header('Location: /account');
+    exit;
+}
+
 require __DIR__ . '/../views/account.php';
 ?>
