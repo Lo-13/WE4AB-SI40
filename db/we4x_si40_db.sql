@@ -1,0 +1,695 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : localhost
+-- Généré le : lun. 18 mai 2026 à 18:44
+-- Version du serveur : 10.4.28-MariaDB
+-- Version de PHP : 8.2.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données : `we4x_si40_db`
+CREATE DATABASE we4x_si40_db;
+USE we4x_si40_db;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `admin_role_request`
+--
+
+CREATE TABLE `admin_role_request` (
+  `request_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `request_status` enum('accepted','denied','pending','') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `admin_role_request`
+--
+
+INSERT INTO `admin_role_request` (`request_id`, `user_id`, `room_id`, `request_status`) VALUES
+(9, 12, 8, 'pending'),
+(11, 25, 10, 'pending');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `comment`
+--
+
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `reservation_id` int(11) NOT NULL,
+  `content` text NOT NULL,
+  `rate` tinyint(4) NOT NULL,
+  `date` datetime NOT NULL,
+  `is_valid` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `game`
+--
+
+CREATE TABLE `game` (
+  `id` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `genre` int(11) NOT NULL,
+  `nb_player_max` int(11) NOT NULL,
+  `plateform` varchar(50) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `game`
+--
+
+INSERT INTO `game` (`id`, `title`, `genre`, `nb_player_max`, `plateform`, `description`) VALUES
+(1, 'Counter-Strike 2', 1, 10, 'PC', 'FPS tactique competitif par equipes de 5.'),
+(2, 'Valorant', 1, 10, 'PC', 'FPS tactique avec agents et strategies d\'equipe.'),
+(3, 'League of Legends', 3, 10, 'PC', 'MOBA 5v5 tres joue en competition.'),
+(4, 'Rocket League', 5, 6, 'PC', 'Football arcade avec voitures, rapide et fun.'),
+(5, 'EA Sports FC 25', 5, 4, 'PlayStation 5', 'Simulation de football ideale pour jouer entre amis.'),
+(6, 'Mario Kart 8 Deluxe', 6, 4, 'Nintendo Switch', 'Course arcade familiale et accessible.'),
+(7, 'Super Smash Bros. Ultimate', 7, 8, 'Nintendo Switch', 'Jeu de combat festif avec de nombreux personnages.'),
+(8, 'Beat Saber', 12, 4, 'VR', 'Jeu de rythme en realite virtuelle.'),
+(9, 'Minecraft', 10, 10, 'PC', 'Jeu de construction et de survie en multijoueur.'),
+(10, 'Street Fighter 6', 7, 2, 'PlayStation 5', 'Jeu de combat technique et competitif.');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `game_genre`
+--
+
+CREATE TABLE `game_genre` (
+  `game_id` int(11) NOT NULL,
+  `genre_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `game_genre`
+--
+
+INSERT INTO `game_genre` (`game_id`, `genre_id`) VALUES
+(1, 1),
+(2, 1),
+(3, 3),
+(4, 5),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 12),
+(9, 10),
+(10, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `game_plateform`
+--
+
+CREATE TABLE `game_plateform` (
+  `game_id` int(11) NOT NULL,
+  `plateforme_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `game_plateform`
+--
+
+INSERT INTO `game_plateform` (`game_id`, `plateforme_id`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 2),
+(6, 6),
+(7, 6),
+(8, 8),
+(9, 1),
+(10, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `genre`
+--
+
+CREATE TABLE `genre` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `genre`
+--
+
+INSERT INTO `genre` (`id`, `name`) VALUES
+(10, 'Aventure'),
+(7, 'Combat'),
+(6, 'Course'),
+(1, 'FPS'),
+(3, 'MOBA'),
+(5, 'Sport'),
+(12, 'VR');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `payment`
+--
+
+CREATE TABLE `payment` (
+  `id` int(11) NOT NULL,
+  `reservation_id` int(11) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `type` enum('credit_card','check','cash','other') NOT NULL,
+  `date` datetime NOT NULL,
+  `status` enum('pending','completed','failed','refunded') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `payment`
+--
+
+INSERT INTO `payment` (`id`, `reservation_id`, `amount`, `type`, `date`, `status`) VALUES
+(1, 1, 45.00, 'credit_card', '2026-05-10 14:05:00', 'completed'),
+(2, 2, 40.00, 'cash', '2026-05-11 18:05:00', 'completed'),
+(3, 3, 36.00, 'credit_card', '2026-05-12 16:05:00', 'pending'),
+(4, 4, 28.00, 'credit_card', '2026-05-13 15:05:00', 'pending');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `plateform`
+--
+
+CREATE TABLE `plateform` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `plateform`
+--
+
+INSERT INTO `plateform` (`id`, `name`) VALUES
+(6, 'Nintendo Switch'),
+(1, 'PC'),
+(2, 'PlayStation 5'),
+(8, 'VR');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `reservation`
+--
+
+CREATE TABLE `reservation` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `game_id` tinyint(4) NOT NULL,
+  `date_reservation` datetime NOT NULL,
+  `date_begin` datetime NOT NULL,
+  `date_end` datetime NOT NULL,
+  `nb_player` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `total_price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `reservation`
+--
+
+INSERT INTO `reservation` (`id`, `user_id`, `room_id`, `game_id`, `date_reservation`, `date_begin`, `date_end`, `nb_player`, `status`, `total_price`) VALUES
+(1, 55, 1, 1, '2026-05-10 14:00:00', '2026-05-10 15:00:00', '2026-05-10 18:00:00', 5, 1, 45),
+(2, 2, 1, 5, '2026-05-11 18:00:00', '2026-05-11 19:00:00', '2026-05-11 21:00:00', 4, 1, 40),
+(3, 55, 1, 8, '2026-05-12 16:00:00', '2026-05-12 17:00:00', '2026-05-12 19:00:00', 4, 2, 36),
+(4, 55, 1, 4, '2026-05-13 15:00:00', '2026-05-13 15:00:00', '2026-05-13 17:00:00', 4, 0, 28),
+(5, 11, 1, 5, '2026-05-09 06:44:01', '2026-04-30 14:43:00', '2026-04-30 20:54:00', 3, 0, 124),
+(60, 55, 12, 2, '2026-05-06 12:31:43', '2026-05-07 12:31:43', '2026-05-08 12:31:43', 6, 1, 135);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `room`
+--
+
+CREATE TABLE `room` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `address` varchar(200) NOT NULL,
+  `capacity` int(11) NOT NULL,
+  `hourly_rate` decimal(10,2) NOT NULL,
+  `description` text NOT NULL,
+  `status` enum('available','unavailable','maintenance','') NOT NULL,
+  `latitude` decimal(8,4) NOT NULL,
+  `longitude` decimal(9,4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `room`
+--
+
+INSERT INTO `room` (`id`, `name`, `address`, `capacity`, `hourly_rate`, `description`, `status`, `latitude`, `longitude`) VALUES
+(1, 'Alpha PC', '12 Rue Oberkampf, 75011 Paris', 6, 15.00, 'Salle PC compacte avec 6 postes, ecrans 144Hz et casques micro.', 'available', 48.8630, 2.3688),
+(2, 'Omega Console', '25 Rue Merciere, 69002 Lyon', 8, 20.00, 'Salon console avec PS5, canape, television 4K et jeux multijoueurs.', 'available', 45.7631, 4.8340),
+(3, 'Nexus Bordeaux', '47 Cours Victor Hugo, 33000 Bordeaux', 10, 14.00, 'Salle polyvalente pour groupes, consoles et postes PC legers.', 'available', 44.8376, -0.5743),
+(4, 'VR Lab Lille', '6 Rue Nationale, 59000 Lille', 6, 18.00, 'Espace VR avec casques recents et zone de jeu securisee.', 'available', 50.6330, 3.0630),
+(5, 'Retro Arcade Nantes', '22 Quai de la Fosse, 44000 Nantes', 12, 16.00, 'Salle retro avec bornes arcade et jeux Switch pour soirees entre amis.', 'available', 47.2115, -1.5680),
+(7, 'Console Loft Rennes', '9 Rue Saint-Michel, 35000 Rennes', 6, 13.00, 'Petit loft console confortable pour sessions privees.', 'available', 48.1139, -1.6816),
+(8, 'ESport Toulouse', '14 Avenue de Muret, 31300 Toulouse', 16, 25.00, 'Salle e-sport pour entrainements d\'equipe et mini-tournois.', 'available', 43.5840, 1.4320),
+(10, 'Studio Marseille', '9 Boulevard de Louvain, 13008 Marseille', 4, 22.00, 'Petite salle avec eclairage, micro et PC pour enregistrer ou jouer.', 'available', 43.2765, 5.3912),
+(11, 'Maison de l\'Esport', '11 Rue Soleillet, 75020 Paris', 40, 30.00, 'Tiers-lieu parisien officiel dédié à l\'esport, arena 600m², régies techniques, consoles next-gen.', 'available', 48.8632, 2.4031),
+(12, 'GameRoom Lyon Sud', '2 Rue du Professeur Appleton, 69007 Lyon', 14, 20.00, 'Salle gaming à Lyon avec 8 PCs, 4 PS5, 2 Xbox Series X, ambiance néon cosy.', 'available', 45.7423, 4.8376),
+(13, 'NexusBox Bordeaux', '47 Cours d\'Alsace-et-Lorraine, 33000 Bordeaux', 10, 17.00, 'Petite salle premium à Bordeaux : PS5, Switch, décoration gaming rétro-futuriste.', 'available', 44.8414, -0.5716),
+(14, 'PixelHub Marseille', '9 Boulevard de Louvain, 13008 Marseille', 18, 19.00, 'Salle gaming en bord de mer : PCs gaming, PS5, ambiance lounge, boissons incluses.', 'maintenance', 43.2765, 5.3912);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `room_administrator`
+--
+
+CREATE TABLE `room_administrator` (
+  `room_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `room_administrator`
+--
+
+INSERT INTO `room_administrator` (`room_id`, `user_id`) VALUES
+(2, 14),
+(3, 15),
+(4, 16),
+(5, 17),
+(7, 18),
+(8, 19),
+(9, 20),
+(10, 21),
+(11, 22),
+(12, 23);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `room_game`
+--
+
+CREATE TABLE `room_game` (
+  `room_id` int(11) NOT NULL,
+  `game_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `room_game`
+--
+
+INSERT INTO `room_game` (`room_id`, `game_id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 5),
+(2, 7),
+(3, 4),
+(3, 5),
+(4, 8),
+(5, 6),
+(5, 7),
+(7, 5),
+(7, 6),
+(8, 1),
+(8, 2),
+(10, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `room_type_material`
+--
+
+CREATE TABLE `room_type_material` (
+  `room_id` int(11) NOT NULL,
+  `type_material_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `room_type_material`
+--
+
+INSERT INTO `room_type_material` (`room_id`, `type_material_id`) VALUES
+(1, 1),
+(1, 6),
+(2, 2),
+(2, 5),
+(3, 1),
+(3, 2),
+(4, 3),
+(4, 5),
+(5, 4),
+(5, 2),
+(7, 2),
+(7, 5),
+(8, 1),
+(8, 6),
+(10, 1),
+(10, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `type_material`
+--
+
+CREATE TABLE `type_material` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `type_material`
+--
+
+INSERT INTO `type_material` (`id`, `name`) VALUES
+(4, 'Borne Arcade'),
+(3, 'Casque VR'),
+(2, 'Console'),
+(6, 'Ecran 144Hz'),
+(1, 'PC Gaming'),
+(5, 'Television 4K');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `age` tinyint(4) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('user','admin','super_admin') NOT NULL,
+  `registration_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `user`
+--
+
+INSERT INTO `user` (`id`, `email`, `name`, `last_name`, `age`, `password`, `role`, `registration_date`) VALUES
+(3, 'a.martin@gmail.com', 'Antoine', 'MARTIN', 28, '$2y$10$aAhashExample001aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-01 10:00:00'),
+(4, 'c.dubois@hotmail.fr', 'Claire', 'DUBOIS', 34, '$2y$10$aAhashExample002aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-03 11:30:00'),
+(5, 'l.bernard@gmail.com', 'Lucas', 'BERNARD', 22, '$2y$10$aAhashExample003aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-05 09:15:00'),
+(6, 'm.thomas@yahoo.fr', 'Marie', 'THOMAS', 19, '$2y$10$aAhashExample004aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-07 14:00:00'),
+(7, 'p.robert@gmail.com', 'Pierre', 'ROBERT', 45, '$2y$10$aAhashExample005aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-10 08:30:00'),
+(8, 'e.richard@outlook.com', 'Emma', 'RICHARD', 25, '$2y$10$aAhashExample006aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-12 16:45:00'),
+(9, 'n.petit@gmail.com', 'Nicolas', 'PETIT', 31, '$2y$10$aAhashExample007aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-14 12:00:00'),
+(10, 'j.leroy@gmail.com', 'Julien', 'LEROY', 27, '$2y$10$aAhashExample008aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-16 10:20:00'),
+(11, 's.moreau@hotmail.fr', 'Sophie', 'MOREAU', 23, '$2y$10$aAhashExample009aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-18 09:00:00'),
+(12, 'r.simon@gmail.com', 'Romain', 'SIMON', 38, '$2y$10$aAhashExample010aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-20 17:30:00'),
+(13, 'a.laurent@gmail.com', 'Alice', 'LAURENT', 21, '$2y$10$aAhashExample011aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-22 11:00:00'),
+(14, 'k.lefebvre@yahoo.fr', 'Kevin', 'LEFEBVRE', 26, '$2y$10$aAhashExample012aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-09-24 15:00:00'),
+(15, 'i.garcia@gmail.com', 'Inès', 'GARCIA', 29, '$2y$10$aAhashExample013aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-09-26 09:45:00'),
+(16, 'b.martinez@outlook.com', 'Baptiste', 'MARTINEZ', 17, '$2y$10$aAhashExample014aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-09-28 13:00:00'),
+(17, 'c.david@gmail.com', 'Chloé', 'DAVID', 33, '$2y$10$aAhashExample015aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-01 10:30:00'),
+(18, 't.bertrand@hotmail.fr', 'Thomas', 'BERTRAND', 24, '$2y$10$aAhashExample016aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-03 14:20:00'),
+(19, 'z.roux@gmail.com', 'Zoé', 'ROUX', 20, '$2y$10$aAhashExample017aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-05 11:00:00'),
+(20, 'm.vincent@gmail.com', 'Maxime', 'VINCENT', 36, '$2y$10$aAhashExample018aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-07 09:00:00'),
+(21, 'a.fournier@yahoo.fr', 'Anaïs', 'FOURNIER', 22, '$2y$10$aAhashExample019aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-09 16:00:00'),
+(22, 'g.morel@gmail.com', 'Guillaume', 'MOREL', 40, '$2y$10$aAhashExample020aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-11 08:00:00'),
+(23, 'c.girard@outlook.com', 'Camille', 'GIRARD', 25, '$2y$10$aAhashExample021aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-13 10:00:00'),
+(24, 'v.andre@gmail.com', 'Victor', 'ANDRE', 30, '$2y$10$aAhashExample022aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-10-15 13:45:00'),
+(25, 'l.lefevre@hotmail.fr', 'Léa', 'LEFEVRE', 18, '$2y$10$aAhashExample023aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-10-17 12:00:00'),
+(26, 'f.mercier@gmail.com', 'François', 'MERCIER', 50, '$2y$10$aAhashExample024aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-19 09:30:00'),
+(27, 'j.dupont@gmail.com', 'Jade', 'DUPONT', 23, '$2y$10$aAhashExample025aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-21 15:00:00'),
+(56, 'j@gamingrooms.fr', 'Julie', 'BENED', 22, '$2y$12$frU7U6pO6MneDWGA3ce.ze4CuYHDZYzh01/BnLsnO4X36cjJji5ly', 'super_admin', '2026-05-18 17:12:10');
+(57, 'a@gamingrooms.fr', 'Antoine', 'MILO', 23, '$2y$12$frU7U6pO6MneDWGA3ce.ze4CuYHDZYzh01/BnLsnO4X36cjJji5ly', 'admin', '2026-05-18 17:15:36');
+(58, 'b@gamingrooms.fr', 'Benjamin', 'DUPUIS', 24, '$2y$12$frU7U6pO6MneDWGA3ce.ze4CuYHDZYzh01/BnLsnO4X36cjJji5ly', 'user', '2026-05-18 17:15:36');
+
+
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `admin_role_request`
+--
+ALTER TABLE `admin_role_request`
+  ADD PRIMARY KEY (`request_id`),
+  ADD KEY `room_id` (`room_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Index pour la table `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `com_reservation_id` (`reservation_id`),
+  ADD KEY `com_user_id` (`user_id`);
+
+--
+-- Index pour la table `game`
+--
+ALTER TABLE `game`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `game_genre`
+--
+ALTER TABLE `game_genre`
+  ADD KEY `genre_game_id` (`game_id`),
+  ADD KEY `genre_genre_id` (`genre_id`);
+
+--
+-- Index pour la table `game_plateform`
+--
+ALTER TABLE `game_plateform`
+  ADD KEY `game_id` (`game_id`),
+  ADD KEY `plateforme_id` (`plateforme_id`);
+
+--
+-- Index pour la table `genre`
+--
+ALTER TABLE `genre`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Index pour la table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `paiement_revervation_id` (`reservation_id`);
+
+--
+-- Index pour la table `plateform`
+--
+ALTER TABLE `plateform`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Index pour la table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reservation_user_id` (`user_id`),
+  ADD KEY `game_id` (`game_id`),
+  ADD KEY `room_id` (`room_id`);
+
+--
+-- Index pour la table `room`
+--
+ALTER TABLE `room`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `room_administrator`
+--
+ALTER TABLE `room_administrator`
+  ADD KEY `room_id` (`room_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Index pour la table `room_game`
+--
+ALTER TABLE `room_game`
+  ADD KEY `room_id` (`room_id`),
+  ADD KEY `game_id` (`game_id`);
+
+--
+-- Index pour la table `room_type_material`
+--
+ALTER TABLE `room_type_material`
+  ADD KEY `type_materiel_room` (`room_id`),
+  ADD KEY `type_materiel` (`type_material_id`) USING BTREE;
+
+--
+-- Index pour la table `type_material`
+--
+ALTER TABLE `type_material`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Index pour la table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `admin_role_request`
+--
+ALTER TABLE `admin_role_request`
+  MODIFY `request_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT pour la table `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `game`
+--
+ALTER TABLE `game`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT pour la table `genre`
+--
+ALTER TABLE `genre`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT pour la table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT pour la table `plateform`
+--
+ALTER TABLE `plateform`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT pour la table `reservation`
+--
+ALTER TABLE `reservation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+
+--
+-- AUTO_INCREMENT pour la table `room`
+--
+ALTER TABLE `room`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT pour la table `type_material`
+--
+ALTER TABLE `type_material`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT pour la table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `admin_role_request`
+--
+ALTER TABLE `admin_role_request`
+  ADD CONSTRAINT `admin_role_request_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `admin_role_request_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `com_reservation_id` FOREIGN KEY (`reservation_id`) REFERENCES `reservation` (`id`),
+  ADD CONSTRAINT `com_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `reservation` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `game_genre`
+--
+ALTER TABLE `game_genre`
+  ADD CONSTRAINT `genre_game_id` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`),
+  ADD CONSTRAINT `genre_genre_id` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`id`);
+
+--
+-- Contraintes pour la table `game_plateform`
+--
+ALTER TABLE `game_plateform`
+  ADD CONSTRAINT `game_plateform_ibfk_1` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`),
+  ADD CONSTRAINT `game_plateform_ibfk_2` FOREIGN KEY (`plateforme_id`) REFERENCES `plateform` (`id`);
+
+--
+-- Contraintes pour la table `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `paiement_revervation_id` FOREIGN KEY (`reservation_id`) REFERENCES `reservation` (`id`);
+
+--
+-- Contraintes pour la table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `room_administrator`
+--
+ALTER TABLE `room_administrator`
+  ADD CONSTRAINT `room_administrator_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `room_game`
+--
+ALTER TABLE `room_game`
+  ADD CONSTRAINT `game_id` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`),
+  ADD CONSTRAINT `room_id` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON DELETE CASCADE;
+
+--
+-- Contraintes pour la table `room_type_material`
+--
+ALTER TABLE `room_type_material`
+  ADD CONSTRAINT `type_materiel` FOREIGN KEY (`type_material_id`) REFERENCES `type_material` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `type_materiel_room` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

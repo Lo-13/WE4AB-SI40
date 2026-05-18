@@ -1,7 +1,11 @@
 <?php
+/*
+Controleur de la page sign in.
+Permet simplement de se connecter et vérifier mdp, rôle etc...
+ */
+require_once __DIR__ . '/../models/user.php';
 session_start();
 require __DIR__ . '/common/db.php';
-require_once __DIR__ . '/../models/user.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email =trim($_POST['email']);
@@ -16,7 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $userObj->id = $user['id'];
         $userObj->email = $user['email'];
         $userObj->name = $user['name'];
+        $userObj->last_name = $user['last_name'];
         $userObj->role = $user['role'];
+        $userObj->registration_date = $user['registration_date'];
 
         $_SESSION['user'] = $userObj;
 
@@ -26,9 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else if ($userObj->role == 'user') {
             header('Location: home');
             exit;
-        } else {
+        } else if ($userObj->role == 'super_admin') {
+            header('Location: dashboard_superadmin');
+            exit;
+        }
+        else {
             $erreur = 'Email ou mot de passe incorrect';
         }
     }
 }
 ?>
+

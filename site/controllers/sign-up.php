@@ -1,7 +1,12 @@
 <?php
+/*
+Controleur de la sign up
+Donc là user s'enregistre envoie les données et vérifie avant que les
+mdp soit les mêmes, email différent etc ...
+ */
+require_once __DIR__ . '/../models/user.php';
 session_start();
 require __DIR__ . '/common/db.php';
-require_once __DIR__ . '/../models/user.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name     = trim($_POST['name']);
@@ -12,21 +17,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mdp_conf = $_POST['password_conf'];
     $role     = "user";
 
-    // Vérification que les mots de passe correspondent
     if ($mdp !== $mdp_conf) {
         $error = 'Les mots de passe ne correspondent pas.';
     } else {
-        // Vérifier si l'email existe déjà
         $query = $db->prepare("SELECT id FROM user WHERE email = :email");
         $query->execute([':email' => $email]);
 
         if ($query->fetch()) {
-            $error = 'Cet email est déjà utilisé.';
+            $error = 'Cet email est deja utilise.';
         } else {
-            // Hasher le mot de passe
             $mdp_hash = password_hash($mdp, PASSWORD_DEFAULT);
 
-            // Insérer l'utilisateur en DB
             $query = $db->prepare('INSERT INTO user (email, name, last_name, age, password, role, registration_date)
                 VALUES (:email, :name, :lastname, :age, :mdp, :role, NOW())'); 
 
@@ -39,7 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ':role'     => $role,
             ]);
             header('Location: /sign-in');
+            exit;
         }
     }
 }
+
+require __DIR__ . '/../views/sign-up.php';
+
 ?>

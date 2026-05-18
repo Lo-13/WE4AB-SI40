@@ -1,11 +1,11 @@
 <?php
+/*
+Vue du formulaire de connexion.
+Le traitement des identifiants est fait dans controleur sign-in.php.
+ */
 $title = "Sign In"; 
 include 'partials/header.php'; 
 ?>
-
-<body class="bg-gray-950 text-white min-h-screen">
-
-
 <main class="flex items-center justify-center mt-20 px-4">
     <div class="bg-gray-900 rounded-2xl p-8 shadow-lg w-full max-w-md border border-gray-800">
         <h2 class="text-2xl font-bold mb-6 text-center">Se connecter</h2>
@@ -20,8 +20,13 @@ include 'partials/header.php';
 
             <div>
                 <label class="text-gray-400 text-sm mb-1 block">Mot de passe</label>
-                <input type="password" name="password" placeholder="••••••••" required
-                       class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500"/>
+                <div class="relative">
+                    <input type="password" id="signin-password" name="password" placeholder="mot de passe" required
+                           class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 pr-10"/>
+                    <button type="button" class="toggle-password absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 hover:text-white" data-target="signin-password">
+                        voir
+                    </button>
+                </div>
             </div>
 
             <button type="submit"
