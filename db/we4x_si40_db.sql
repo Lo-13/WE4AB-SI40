@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : sam. 09 mai 2026 à 13:24
+-- Généré le : lun. 18 mai 2026 à 18:44
 -- Version du serveur : 10.4.28-MariaDB
 -- Version de PHP : 8.2.4
 
@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 
 --
 -- Base de données : `we4x_si40_db`
---
+CREATE DATABASE we4x_si40_db;
+USE we4x_si40_db;
 
 -- --------------------------------------------------------
 
@@ -40,7 +41,6 @@ CREATE TABLE `admin_role_request` (
 
 INSERT INTO `admin_role_request` (`request_id`, `user_id`, `room_id`, `request_status`) VALUES
 (9, 12, 8, 'pending'),
-(10, 24, 9, 'pending'),
 (11, 25, 10, 'pending');
 
 -- --------------------------------------------------------
@@ -58,13 +58,6 @@ CREATE TABLE `comment` (
   `date` datetime NOT NULL,
   `is_valid` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Déchargement des données de la table `comment`
---
-
-INSERT INTO `comment` (`id`, `user_id`, `reservation_id`, `content`, `rate`, `date`, `is_valid`) VALUES
-(3, 55, 60, 'c\'était génial', 10, '2026-05-09 11:24:02', 0);
 
 -- --------------------------------------------------------
 
@@ -282,7 +275,6 @@ INSERT INTO `room` (`id`, `name`, `address`, `capacity`, `hourly_rate`, `descrip
 (5, 'Retro Arcade Nantes', '22 Quai de la Fosse, 44000 Nantes', 12, 16.00, 'Salle retro avec bornes arcade et jeux Switch pour soirees entre amis.', 'available', 47.2115, -1.5680),
 (7, 'Console Loft Rennes', '9 Rue Saint-Michel, 35000 Rennes', 6, 13.00, 'Petit loft console confortable pour sessions privees.', 'available', 48.1139, -1.6816),
 (8, 'ESport Toulouse', '14 Avenue de Muret, 31300 Toulouse', 16, 25.00, 'Salle e-sport pour entrainements d\'equipe et mini-tournois.', 'available', 43.5840, 1.4320),
-(9, 'Family Gaming Dijon', '4 Rue de la Liberte, 21000 Dijon', 5, 12.50, 'Salle accessible pour familles, jeux cooperatifs et espace detente.', 'available', 47.3215, 5.0410),
 (10, 'Studio Marseille', '9 Boulevard de Louvain, 13008 Marseille', 4, 22.00, 'Petite salle avec eclairage, micro et PC pour enregistrer ou jouer.', 'available', 43.2765, 5.3912),
 (11, 'Maison de l\'Esport', '11 Rue Soleillet, 75020 Paris', 40, 30.00, 'Tiers-lieu parisien officiel dédié à l\'esport, arena 600m², régies techniques, consoles next-gen.', 'available', 48.8632, 2.4031),
 (12, 'GameRoom Lyon Sud', '2 Rue du Professeur Appleton, 69007 Lyon', 14, 20.00, 'Salle gaming à Lyon avec 8 PCs, 4 PS5, 2 Xbox Series X, ambiance néon cosy.', 'available', 45.7423, 4.8376),
@@ -305,7 +297,6 @@ CREATE TABLE `room_administrator` (
 --
 
 INSERT INTO `room_administrator` (`room_id`, `user_id`) VALUES
-(1, 13),
 (2, 14),
 (3, 15),
 (4, 16),
@@ -347,7 +338,6 @@ INSERT INTO `room_game` (`room_id`, `game_id`) VALUES
 (7, 6),
 (8, 1),
 (8, 2),
-(9, 9),
 (10, 10);
 
 -- --------------------------------------------------------
@@ -380,8 +370,6 @@ INSERT INTO `room_type_material` (`room_id`, `type_material_id`) VALUES
 (7, 5),
 (8, 1),
 (8, 6),
-(9, 2),
-(9, 5),
 (10, 1),
 (10, 5);
 
@@ -440,7 +428,7 @@ INSERT INTO `user` (`id`, `email`, `name`, `last_name`, `age`, `password`, `role
 (10, 'j.leroy@gmail.com', 'Julien', 'LEROY', 27, '$2y$10$aAhashExample008aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-16 10:20:00'),
 (11, 's.moreau@hotmail.fr', 'Sophie', 'MOREAU', 23, '$2y$10$aAhashExample009aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-18 09:00:00'),
 (12, 'r.simon@gmail.com', 'Romain', 'SIMON', 38, '$2y$10$aAhashExample010aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-20 17:30:00'),
-(13, 'a.laurent@gmail.com', 'Alice', 'LAURENT', 21, '$2y$10$aAhashExample011aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-09-22 11:00:00'),
+(13, 'a.laurent@gmail.com', 'Alice', 'LAURENT', 21, '$2y$10$aAhashExample011aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-09-22 11:00:00'),
 (14, 'k.lefebvre@yahoo.fr', 'Kevin', 'LEFEBVRE', 26, '$2y$10$aAhashExample012aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-09-24 15:00:00'),
 (15, 'i.garcia@gmail.com', 'Inès', 'GARCIA', 29, '$2y$10$aAhashExample013aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-09-26 09:45:00'),
 (16, 'b.martinez@outlook.com', 'Baptiste', 'MARTINEZ', 17, '$2y$10$aAhashExample014aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-09-28 13:00:00'),
@@ -455,7 +443,11 @@ INSERT INTO `user` (`id`, `email`, `name`, `last_name`, `age`, `password`, `role
 (25, 'l.lefevre@hotmail.fr', 'Léa', 'LEFEVRE', 18, '$2y$10$aAhashExample023aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'user', '2025-10-17 12:00:00'),
 (26, 'f.mercier@gmail.com', 'François', 'MERCIER', 50, '$2y$10$aAhashExample024aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-19 09:30:00'),
 (27, 'j.dupont@gmail.com', 'Jade', 'DUPONT', 23, '$2y$10$aAhashExample025aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'admin', '2025-10-21 15:00:00'),
-(55, 'j@gaminggrooms.fr', 'Julie', 'BENED', 24, '$2y$12$VigNs4rsZg17bJjRrjYxj.Rqp6serN/PyEzCX43zdVKIDTz7TvGG2', 'user', '2026-05-09 12:24:34');
+(56, 'j@gamingrooms.fr', 'Julie', 'BENED', 22, '$2y$12$frU7U6pO6MneDWGA3ce.ze4CuYHDZYzh01/BnLsnO4X36cjJji5ly', 'super_admin', '2026-05-18 17:12:10');
+(57, 'a@gamingrooms.fr', 'Antoine', 'MILO', 23, '$2y$12$frU7U6pO6MneDWGA3ce.ze4CuYHDZYzh01/BnLsnO4X36cjJji5ly', 'admin', '2026-05-18 17:15:36');
+(58, 'b@gamingrooms.fr', 'Benjamin', 'DUPUIS', 24, '$2y$12$frU7U6pO6MneDWGA3ce.ze4CuYHDZYzh01/BnLsnO4X36cjJji5ly', 'user', '2026-05-18 17:15:36');
+
+
 
 --
 -- Index pour les tables déchargées
@@ -629,7 +621,7 @@ ALTER TABLE `type_material`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- Contraintes pour les tables déchargées
